@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2788B5"
     tools:context=".HomeActivity">
 
     <TextView
@@ -12,6 +13,8 @@
         android:layout_height="72dp"
         android:layout_marginTop="76dp"
         android:text="Welcome, username"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
