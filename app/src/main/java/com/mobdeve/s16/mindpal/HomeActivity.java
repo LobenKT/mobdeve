@@ -31,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
         navView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.Profile_btn){
                 Intent intent = new Intent(this, ProfileActivity.class);
+                intent.putExtra("KeyName", username);
                 startActivity(intent);
             }
             else if (item.getItemId() == R.id.Settings_btn){
