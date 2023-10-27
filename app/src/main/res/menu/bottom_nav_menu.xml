@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/Home_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="Home"
-        android:icon="@drawable/home_asset"
-        android:id="@+id/Home_btn"/>
+        android:icon="@drawable/home_asset" />
     <item
         android:id="@+id/Meditate_btn"
         android:layout_width="wrap_content"
@@ -15,15 +15,15 @@
         android:icon="@drawable/meditate_asset"
         android:title="Meditate" />
     <item
+        android:id="@+id/Profile_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="Profile"
-        android:icon="@drawable/profile_asset"
-        android:id="@+id/Profile_btn"/>
+        android:icon="@drawable/profile_asset" />
     <item
+        android:id="@+id/Notification_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="Settings"
-        android:icon="@drawable/settings_asset"
-        android:id="@+id/Settings_btn"/>
+        android:title="Notification"
+        android:icon="@drawable/settings_asset"/>
 </menu>
