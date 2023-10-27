@@ -38,9 +38,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         usernameText.setText(username);
 
-        goalModels.add(new goals_model("Test Goal", 0 , 100));
-        goalModels.add(new goals_model("Test Goal2", 0 , 100));
-        goalModels.add(new goals_model("Test Goal3", 0 , 100));
+        goalModels.add(new goals_model("Test Goal", "Ongoing"));
+        goalModels.add(new goals_model("Test Goal2", "Completed"));
+        goalModels.add(new goals_model("Test Goal3", "Ongoing"));
 
 
 
@@ -68,7 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void AddGoal(String goalTitle, int GoalValue){
-        goalModels.add(new goals_model(goalTitle , 0 , GoalValue));
+        goalModels.add(new goals_model(goalTitle, "Ongoing"));
         goalAdaptor = new goal_RecyclerViewAdaptor(this , goalModels);
         goal_recycler.setAdapter(goalAdaptor);
         goal_recycler.setLayoutManager(new LinearLayoutManager(this));

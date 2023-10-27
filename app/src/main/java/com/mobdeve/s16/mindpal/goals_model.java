@@ -2,36 +2,26 @@ package com.mobdeve.s16.mindpal;
 
 public class goals_model {
     String GoalTitle;
-    int CurrentProgress;
-    int GoalValue;
+    String CurrentProgress;
 
-    public goals_model(String goalTitle, int currentProgress, int goalValue) {
+    public goals_model(String goalTitle, String currentProgress) {
         GoalTitle = goalTitle;
         CurrentProgress = currentProgress;
-        GoalValue = goalValue;
     }
-
     public String getGoalTitle() {
         return GoalTitle;
     }
 
-    public int getCurrentProgress() {
+    public String getCurrentProgress() {
         return CurrentProgress;
-    }
-
-    public int getGoalValue() {
-        return GoalValue;
     }
 
     public void setGoalTitle(String goalTitle) {
         GoalTitle = goalTitle;
     }
 
-    public void setCurrentProgress(int currentProgress) {
+    public void setCurrentProgress(String currentProgress) {
         CurrentProgress = currentProgress;
     }
 
-    public void setGoalValue(int goalValue) {
-        GoalValue = goalValue;
-    }
 }

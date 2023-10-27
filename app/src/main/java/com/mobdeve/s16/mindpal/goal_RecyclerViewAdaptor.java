@@ -33,6 +33,7 @@ public class goal_RecyclerViewAdaptor extends RecyclerView.Adapter<goal_Recycler
     public void onBindViewHolder(@NonNull goal_RecyclerViewAdaptor.MyViewHolder holder, int position) {
 
         holder.GoalTitle.setText(goalModels.get(position).getGoalTitle());
+        holder.GoalProgress.setText(goalModels.get(position).getCurrentProgress());
 
     }
 
@@ -44,10 +45,12 @@ public class goal_RecyclerViewAdaptor extends RecyclerView.Adapter<goal_Recycler
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView GoalTitle;
+        TextView GoalProgress;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             GoalTitle = itemView.findViewById(R.id.Goal_Title);
+            GoalProgress = itemView.findViewById(R.id.progress_text);
         }
     }
 }
