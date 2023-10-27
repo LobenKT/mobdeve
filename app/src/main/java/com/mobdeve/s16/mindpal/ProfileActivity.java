@@ -15,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements GoalDialog.GoalDialogListener {
 
     BottomNavigationView navView;
     TextView usernameText;
@@ -24,6 +24,7 @@ public class ProfileActivity extends AppCompatActivity {
     Button addGoal;
     RecyclerView goal_recycler;
     goal_RecyclerViewAdaptor goalAdaptor;
+    GoalDialog goalDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,15 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void AddGoal(String goalTitle, int GoalValue){
-        goalModels.add(new goals_model(goalTitle, "Ongoing"));
+
+        goalDialog = new GoalDialog();
+        goalDialog.show(getSupportFragmentManager(), "Enter Goal");
+    }
+
+    @Override
+    public void applyTexts(String GoalTitle) {
+
+        goalModels.add(new goals_model(GoalTitle, "Ongoing"));
         goalAdaptor = new goal_RecyclerViewAdaptor(this , goalModels);
         goal_recycler.setAdapter(goalAdaptor);
         goal_recycler.setLayoutManager(new LinearLayoutManager(this));
