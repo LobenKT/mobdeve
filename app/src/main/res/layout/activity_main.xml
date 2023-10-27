@@ -7,81 +7,90 @@
     android:padding="24dp"
     tools:context=".MainActivity">
 
+    <!-- Logo ImageView -->
+    <ImageView
+        android:id="@+id/logo_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="36dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/mindpal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="16dp"
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="#738c89"
         android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/logo_image" />
 
     <EditText
-android:id="@+id/enter_username"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:layout_marginTop="56dp"
-android:background="@drawable/rounded_edittext"
-android:hint="Username"
-android:inputType="text"
-android:padding="12dp"
-android:textColorHint="#B0FFFFFF"
-android:textColor="#FFFFFF"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toBottomOf="@+id/title_text" />
+        android:id="@+id/enter_username"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="@string/username"
+        android:inputType="text"
+        android:padding="12dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#B0FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_text" />
 
-<EditText
-android:id="@+id/enter_password"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:layout_marginTop="16dp"
-android:background="@drawable/rounded_edittext"
-android:hint="Password"
-android:inputType="textPassword"
-android:padding="12dp"
-android:textColorHint="#B0FFFFFF"
-android:textColor="#FFFFFF"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toBottomOf="@+id/enter_username" />
-
+    <EditText
+        android:id="@+id/enter_password"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#B0FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enter_username" />
 
     <Button
         android:id="@+id/login_button"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@drawable/rounded_button"
         android:text="@string/login"
-        android:textColor="#FFFFFF"
+        android:textColor="#Ffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_password" />
+        app:layout_constraintTop_toBottomOf="@id/enter_password" />
 
     <TextView
         android:id="@+id/no_account_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:text="@string/noaccount"
         android:textAlignment="center"
         android:textColor="#738c89"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_button" />
 
-
     <Button
         android:id="@+id/signup_button"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/rounded_button"
@@ -91,4 +100,4 @@ app:layout_constraintTop_toBottomOf="@+id/enter_username" />
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/no_account_text" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
