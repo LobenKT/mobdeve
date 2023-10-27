@@ -19,7 +19,7 @@ public class featured_RecyclerAdaptor extends RecyclerView.Adapter<featured_Recy
     ArrayList<featured_model> featuredModels;
 
     /*
-    RANDOM COMMENT 1 
+    RANDOM COMMENT 1234
      */
     public featured_RecyclerAdaptor(Context context, ArrayList<featured_model> featuredModels) {
         this.context = context;
