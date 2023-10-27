@@ -29,8 +29,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                 intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
                 System.out.println("item2:" + item);
-            } else if (itemId == R.id.Settings_btn) {
-                // Handle settings
+            } else if (itemId == R.id.Notification_btn) {
+                intent = new Intent(this, NotificationsActivity.class);
+                startActivity(intent);
+                System.out.println("item2:" + item);
             }
             return true;
         });
