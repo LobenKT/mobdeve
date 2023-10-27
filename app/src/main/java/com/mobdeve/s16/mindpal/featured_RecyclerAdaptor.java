@@ -28,7 +28,6 @@ public class featured_RecyclerAdaptor extends RecyclerView.Adapter<featured_Recy
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.featured_rows, parent, false);
         return new featured_RecyclerAdaptor.MyFeatureHolder(view);
-
     }
 
     @Override
@@ -38,6 +37,9 @@ public class featured_RecyclerAdaptor extends RecyclerView.Adapter<featured_Recy
         holder.FeatureThumbnail.setImageResource(featuredModels.get(position).getFeatured_thumbnail());
     }
 
+    /*
+    * Function to be used to display the cards.
+     */
     @Override
     public int getItemCount() {
         return featuredModels.size();
