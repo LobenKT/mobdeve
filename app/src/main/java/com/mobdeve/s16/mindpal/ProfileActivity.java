@@ -1,10 +1,8 @@
 package com.mobdeve.s16.mindpal;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,9 +13,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
-public class ProfileActivity extends AppCompatActivity implements GoalDialog.GoalDialogListener {
+public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDialogListener {
 
-    BottomNavigationView navView;
     TextView usernameText;
     ImageView profileImage;
     ArrayList<goals_model> goalModels = new ArrayList<>();
@@ -27,11 +24,13 @@ public class ProfileActivity extends AppCompatActivity implements GoalDialog.Goa
     GoalDialog goalDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);  // this should be declared first in ProfileActivity
         setContentView(R.layout.activity_profile);
 
-        navView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+        setupBottomNavigation(); // Setup NavBar
+
         usernameText = (TextView) findViewById(R.id.username_text);
+        System.out.println("usernameText: " + usernameText);
         String username = getIntent().getStringExtra("KeyName");
         goal_recycler = (RecyclerView) findViewById(R.id.goals_recycler_view);
         profileImage = (ImageView) findViewById(R.id.profile_image);
@@ -43,8 +42,6 @@ public class ProfileActivity extends AppCompatActivity implements GoalDialog.Goa
         goalModels.add(new goals_model("Test Goal2", "Completed"));
         goalModels.add(new goals_model("Test Goal3", "Ongoing"));
 
-
-
         goalAdaptor = new goal_RecyclerViewAdaptor(this , goalModels);
         goal_recycler.setAdapter(goalAdaptor);
         goal_recycler.setLayoutManager(new LinearLayoutManager(this));
@@ -54,17 +51,6 @@ public class ProfileActivity extends AppCompatActivity implements GoalDialog.Goa
             public void onClick(View v) {
                 AddGoal("New Goal" , 100);
             }
-        });
-        navView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.Home_btn){
-                Intent intent = new Intent(this, HomeActivity.class);
-                startActivity(intent);
-            }
-            else if (item.getItemId() == R.id.Settings_btn){
-
-            }
-
-            return true;
         });
     }
 
