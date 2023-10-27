@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LogInButton = (Button)findViewById(R.id.CreateAccount_Button);
+        LogInButton = (Button)findViewById(R.id.login_button);
         SignUpButton = (Button)findViewById(R.id.signup_button);
         UserName = (EditText) findViewById(R.id.enter_username);
 

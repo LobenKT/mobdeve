@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">MIndPal</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">MindPal</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="login">Log In</string>
+    <string name="signup">Sign Up</string>
+    <string name="noaccount">Dont have an account?</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
