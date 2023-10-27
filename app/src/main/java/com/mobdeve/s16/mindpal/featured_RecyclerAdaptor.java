@@ -33,6 +33,9 @@ public class featured_RecyclerAdaptor extends RecyclerView.Adapter<featured_Recy
         return new featured_RecyclerAdaptor.MyFeatureHolder(view);
     }
 
+    /*
+    connects data to each xml card for article.
+     */
     @Override
     public void onBindViewHolder(@NonNull featured_RecyclerAdaptor.MyFeatureHolder holder, int position) {
         holder.FeatureTitle.setText(featuredModels.get(position).getFeatured_Title());
