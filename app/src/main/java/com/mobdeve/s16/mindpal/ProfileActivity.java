@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,9 +20,8 @@ public class ProfileActivity extends AppCompatActivity {
     BottomNavigationView navView;
     TextView usernameText;
     ImageView profileImage;
-
     ArrayList<goals_model> goalModels = new ArrayList<>();
-
+    Button addGoal;
     RecyclerView goal_recycler;
     goal_RecyclerViewAdaptor goalAdaptor;
     @Override
@@ -33,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
         String username = getIntent().getStringExtra("KeyName");
         goal_recycler = (RecyclerView) findViewById(R.id.goals_recycler_view);
         profileImage = (ImageView) findViewById(R.id.profile_image);
+        addGoal = (Button) findViewById(R.id.add_Goal_btn);
 
         usernameText.setText(username);
 
@@ -40,10 +42,18 @@ public class ProfileActivity extends AppCompatActivity {
         goalModels.add(new goals_model("Test Goal2", 0 , 100));
         goalModels.add(new goals_model("Test Goal3", 0 , 100));
 
+
+
         goalAdaptor = new goal_RecyclerViewAdaptor(this , goalModels);
         goal_recycler.setAdapter(goalAdaptor);
         goal_recycler.setLayoutManager(new LinearLayoutManager(this));
 
+        addGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddGoal("New Goal" , 100);
+            }
+        });
         navView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.Home_btn){
                 Intent intent = new Intent(this, HomeActivity.class);
@@ -59,5 +69,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void AddGoal(String goalTitle, int GoalValue){
         goalModels.add(new goals_model(goalTitle , 0 , GoalValue));
+        goalAdaptor = new goal_RecyclerViewAdaptor(this , goalModels);
+        goal_recycler.setAdapter(goalAdaptor);
+        goal_recycler.setLayoutManager(new LinearLayoutManager(this));
     }
 }
