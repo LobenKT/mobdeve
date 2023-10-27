@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2788B5"
-    tools:context=".MainActivity">
+    tools:context=".SignUpActivity">
 
     <TextView
         android:id="@+id/TitleText"
@@ -49,34 +49,11 @@
         app:layout_constraintTop_toBottomOf="@+id/enter_username" />
 
     <Button
-        android:id="@+id/signup_button"
-        android:layout_width="251dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="8dp"
-        android:text="Sign Up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/no_account_text" />
-
-    <TextView
-        android:id="@+id/no_account_text"
-        android:layout_width="212dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="40dp"
-        android:text="Don't have an Account?"
-        android:textAlignment="center"
-        android:textColor="#EAE4E4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CreateAccount_Button" />
-
-    <Button
         android:id="@+id/CreateAccount_Button"
         android:layout_width="205dp"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
-        android:text="Log In"
+        android:text="Create Account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"

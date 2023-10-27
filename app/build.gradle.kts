@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.mobdeve.s16.mindpal"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.mobdeve.s16.mindpal"
@@ -24,6 +24,12 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+
+    buildFeatures{
+
+        viewBinding = true
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
