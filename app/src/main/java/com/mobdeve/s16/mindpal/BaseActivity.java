@@ -4,6 +4,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.mobdeve.s16.mindpal.home.HomeActivity;
 import com.mobdeve.s16.mindpal.notification.NotificationsActivity;
 
 import android.content.Intent;
@@ -16,7 +17,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-    void setupBottomNavigation() {
+    protected void setupBottomNavigation() {
         navView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
 
         navView.setOnItemSelectedListener(item -> {

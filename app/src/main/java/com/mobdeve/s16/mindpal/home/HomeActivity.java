@@ -1,10 +1,15 @@
-package com.mobdeve.s16.mindpal;
+package com.mobdeve.s16.mindpal.home;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.TextView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import com.mobdeve.s16.mindpal.BaseActivity;
+import com.mobdeve.s16.mindpal.R;
+import com.mobdeve.s16.mindpal.home.featured_RecyclerAdaptor;
+import com.mobdeve.s16.mindpal.home.featured_model;
+
 import java.util.ArrayList;
 
 public class HomeActivity extends BaseActivity {

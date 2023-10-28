@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.mobdeve.s16.mindpal.home.HomeActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     Button LogInButton;

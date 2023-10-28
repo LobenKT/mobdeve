@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.mobdeve.s16.mindpal.home.HomeActivity;
 
 import java.util.ArrayList;
 
