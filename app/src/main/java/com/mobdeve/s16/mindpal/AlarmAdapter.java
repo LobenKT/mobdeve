@@ -5,8 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.List;
+import android.widget.Button;
 import android.widget.TextView;
+import java.util.List;
 
 public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> {
 
@@ -29,6 +30,13 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         holder.timeTextView.setText(alarm.getTime());
         holder.repeatTextView.setText("Repeat: " + alarm.getRepeat());
         holder.labelTextView.setText("Label: " + alarm.getLabel());
+
+        // Handle the delete button click
+        holder.deleteButton.setOnClickListener(v -> {
+            alarmList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, alarmList.size());
+        });
     }
 
     @Override
@@ -38,13 +46,14 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
 
     public static class AlarmViewHolder extends RecyclerView.ViewHolder {
         TextView timeTextView, repeatTextView, labelTextView;
+        Button deleteButton; // Reference for the delete button
 
         public AlarmViewHolder(@NonNull View itemView) {
             super(itemView);
             timeTextView = itemView.findViewById(R.id.alarm_time_textView);
             repeatTextView = itemView.findViewById(R.id.alarm_repeat_textView);
             labelTextView = itemView.findViewById(R.id.alarm_label_textView);
+            deleteButton = itemView.findViewById(R.id.deleteAlarmButton); // Initialize the delete button
         }
     }
 }
-
