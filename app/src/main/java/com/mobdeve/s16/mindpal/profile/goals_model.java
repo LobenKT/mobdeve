@@ -1,4 +1,4 @@
-package com.mobdeve.s16.mindpal;
+package com.mobdeve.s16.mindpal.profile;
 
 public class goals_model {
     String GoalTitle;

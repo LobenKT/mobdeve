@@ -1,4 +1,4 @@
-package com.mobdeve.s16.mindpal;
+package com.mobdeve.s16.mindpal.profile;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.mobdeve.s16.mindpal.R;
 
 import java.util.ArrayList;
 
