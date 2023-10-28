@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mobdeve.s16.mindpal.home.HomeActivity;
+import com.mobdeve.s16.mindpal.meditate.MeditateActivity;
 import com.mobdeve.s16.mindpal.notification.NotificationsActivity;
 import com.mobdeve.s16.mindpal.profile.ProfileActivity;
 
@@ -32,6 +33,8 @@ public abstract class NavigationActivity extends AppCompatActivity {
                 intent = new Intent(this, ProfileActivity.class);
             } else if (itemId == R.id.Notification_btn && !this.getClass().equals(NotificationsActivity.class)) {
                 intent = new Intent(this, NotificationsActivity.class);
+            } else if (itemId == R.id.Meditate_btn && !this.getClass().equals(MeditateActivity.class)){
+                intent = new Intent(this, MeditateActivity.class);
             }
 
             if (intent != null) {
@@ -49,6 +52,8 @@ public abstract class NavigationActivity extends AppCompatActivity {
             navView.setSelectedItemId(R.id.Profile_btn);
         } else if (this.getClass().equals(NotificationsActivity.class)) {
             navView.setSelectedItemId(R.id.Notification_btn);
+        } else if (this.getClass().equals(MeditateActivity.class)){
+            navView.setSelectedItemId(R.id.Meditate_btn);
         }
     }
 
