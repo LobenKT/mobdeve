@@ -26,7 +26,7 @@ public class GoalDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.goal_popup, null);
+        View view = inflater.inflate(R.layout.goal_popup_profile, null);
 
         builder.setView(view)
                 .setTitle("Create Goal")

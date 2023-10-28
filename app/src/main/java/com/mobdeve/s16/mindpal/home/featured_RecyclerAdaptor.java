@@ -28,7 +28,7 @@ public class featured_RecyclerAdaptor extends RecyclerView.Adapter<featured_Recy
     @Override
     public featured_RecyclerAdaptor.MyFeatureHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.featured_rows, parent, false);
+        View view = inflater.inflate(R.layout.featured_rows_home, parent, false);
         return new featured_RecyclerAdaptor.MyFeatureHolder(view);
     }
 

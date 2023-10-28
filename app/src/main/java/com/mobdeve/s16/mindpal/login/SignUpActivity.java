@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.mobdeve.s16.mindpal.R;
-import com.mobdeve.s16.mindpal.login.MainActivity;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -17,7 +16,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_sign_up_login);
 
         SignUpButton = (Button) findViewById(R.id.CreateAccount_Button);
 
