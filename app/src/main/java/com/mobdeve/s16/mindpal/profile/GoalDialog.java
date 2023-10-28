@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,10 +42,20 @@ public class GoalDialog extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         String GoalTitle = inputGoal.getText().toString();
                         listener.applyTexts(GoalTitle);
+
+                        new AlertDialog.Builder(getContext())
+                                .setTitle("Congratulations!")
+                                .setMessage("Goal set successfully! Let's go through this exciting journey!")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+                        // Display the toast message
+                        //Toast.makeText(getContext(), "Goal set successfully!", Toast.LENGTH_SHORT).show();
                     }
                 });
         inputGoal = view.findViewById(R.id.input_goal_title);
         return builder.create();
+
     }
 
     @Override

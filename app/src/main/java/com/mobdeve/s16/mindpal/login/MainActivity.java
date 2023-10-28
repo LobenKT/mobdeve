@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 
 import com.mobdeve.s16.mindpal.R;
 import com.mobdeve.s16.mindpal.home.HomeActivity;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         LogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                 openHomeActivity();
 
             }
