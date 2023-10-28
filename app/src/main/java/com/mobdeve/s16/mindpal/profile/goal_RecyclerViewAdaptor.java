@@ -27,7 +27,7 @@ public class goal_RecyclerViewAdaptor extends RecyclerView.Adapter<goal_Recycler
     public goal_RecyclerViewAdaptor.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.profile_goals_row, parent, false);
+        View view = inflater.inflate(R.layout.goals_row_profile, parent, false);
         return new goal_RecyclerViewAdaptor.MyViewHolder(view);
     }
 

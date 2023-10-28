@@ -35,7 +35,7 @@ public class AddAlarmDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.fragment_add_alarm, null);
+        View view = inflater.inflate(R.layout.fragment_add_notification, null);
 
         timePicker = view.findViewById(R.id.timePicker);
         repeatSpinner = view.findViewById(R.id.repeatSpinner);
