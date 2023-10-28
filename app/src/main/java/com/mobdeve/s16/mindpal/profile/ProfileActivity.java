@@ -33,7 +33,10 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
         usernameText = (TextView) findViewById(R.id.username_text);
         System.out.println("usernameText: " + usernameText);
         String username = getIntent().getStringExtra("KeyName");
+
         goal_recycler = (RecyclerView) findViewById(R.id.goals_recycler_view);
+        goal_recycler.setNestedScrollingEnabled(false);
+
         profileImage = (ImageView) findViewById(R.id.profile_image);
         addGoal = (Button) findViewById(R.id.add_Goal_btn);
 
