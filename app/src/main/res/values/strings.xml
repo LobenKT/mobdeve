@@ -8,4 +8,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_alarm">Add Alarm</string>
     <string name="settings">Settings</string>
+    <string name="check_in">Check In</string>
+    <string name="goals">Goals</string>
+    <string name="add_goal">Add A Goal</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thur">Thu</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+    <string name="sun">Sun</string>
+
 </resources>
