@@ -24,6 +24,7 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
     RecyclerView goal_recycler;
     goal_RecyclerViewAdaptor goalAdaptor;
     GoalDialog goalDialog;
+    ConfirmDialog confirmDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +77,11 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
                             return true;
                         } else if (item.getItemId() == R.id.logout) {
                             // Handle logout action
+                            confirmation();
                             return true;
                         } else if (item.getItemId() == R.id.delete) {
                             // Handle delete action
+                            confirmation();
                             return true;
                         } else {
                             return false;
@@ -95,6 +98,11 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
 
         goalDialog = new GoalDialog();
         goalDialog.show(getSupportFragmentManager(), "Enter Goal");
+    }
+
+    private void confirmation(){
+        confirmDialog = new ConfirmDialog();
+        confirmDialog.show(getSupportFragmentManager(), "Confirmation");
     }
 
     @Override
