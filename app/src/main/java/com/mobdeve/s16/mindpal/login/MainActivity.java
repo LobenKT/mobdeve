@@ -1,4 +1,4 @@
-package com.mobdeve.s16.mindpal;
+package com.mobdeve.s16.mindpal.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.mobdeve.s16.mindpal.R;
+import com.mobdeve.s16.mindpal.home.HomeActivity;
 
 public class MainActivity extends AppCompatActivity {
 

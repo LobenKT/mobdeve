@@ -1,4 +1,4 @@
-package com.mobdeve.s16.mindpal;
+package com.mobdeve.s16.mindpal.home;
 
 public class featured_model {
     String Featured_Title;
