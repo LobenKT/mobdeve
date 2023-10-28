@@ -26,6 +26,7 @@ public class HomeActivity extends NavigationActivity {
         setupBottomNavigation(); // Setup NavBar
 
         feature_recycler = findViewById(R.id.feature_recycler);
+        feature_recycler.setNestedScrollingEnabled(false);
 
         WelcomeText = (TextView) findViewById(R.id.Welcome_Message);
         String username = getIntent().getStringExtra("KeyUsername");
