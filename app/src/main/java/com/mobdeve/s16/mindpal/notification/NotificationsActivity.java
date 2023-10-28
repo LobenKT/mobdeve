@@ -1,4 +1,4 @@
-package com.mobdeve.s16.mindpal;
+package com.mobdeve.s16.mindpal.notification;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mobdeve.s16.mindpal.R;
 
 import java.util.ArrayList;
 import java.util.List;

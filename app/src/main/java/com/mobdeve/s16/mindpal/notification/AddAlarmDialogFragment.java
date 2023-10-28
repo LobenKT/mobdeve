@@ -1,4 +1,4 @@
-package com.mobdeve.s16.mindpal;
+package com.mobdeve.s16.mindpal.notification;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+
+import com.mobdeve.s16.mindpal.R;
 
 public class AddAlarmDialogFragment extends DialogFragment {
 
