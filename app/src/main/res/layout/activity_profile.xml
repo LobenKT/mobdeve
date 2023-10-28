@@ -25,9 +25,9 @@
             <TextView
                 android:id="@+id/username_text"
                 android:layout_width="169dp"
-                android:layout_height="122dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="40dp"
                 android:text="USERNAME"
                 android:textColor="@color/white"
                 android:textSize="25sp"
@@ -36,6 +36,17 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/profile_image"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/settings"
+                android:src="@drawable/ic_settings"
+                app:layout_constraintStart_toEndOf="@+id/profile_image"
+                app:layout_constraintTop_toBottomOf="@+id/username_text" />
 
             <TextView
                 android:id="@+id/MoodTracker_Text"
