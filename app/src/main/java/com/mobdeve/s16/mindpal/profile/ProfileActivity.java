@@ -1,14 +1,15 @@
 package com.mobdeve.s16.mindpal.profile;
 
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.mobdeve.s16.mindpal.R;
 import com.mobdeve.s16.mindpal.home.HomeActivity;
 
@@ -23,6 +24,7 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
     RecyclerView goal_recycler;
     goal_RecyclerViewAdaptor goalAdaptor;
     GoalDialog goalDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);  // this should be declared first in ProfileActivity
@@ -56,6 +58,37 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
                 AddGoal("New Goal" , 100);
             }
         });
+
+
+        ImageView ivSettings = findViewById(R.id.iv_settings);
+        ivSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(ProfileActivity.this, v);
+                popup.getMenuInflater().inflate(R.menu.settings_menu_profile, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (item.getItemId() == R.id.change_profile) {
+                            // Handle change profile action
+                            return true;
+                        } else if (item.getItemId() == R.id.change_username) {
+                            // Handle change username action
+                            return true;
+                        } else if (item.getItemId() == R.id.logout) {
+                            // Handle logout action
+                            return true;
+                        } else if (item.getItemId() == R.id.delete) {
+                            // Handle delete action
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                });
+                popup.show();
+            }
+
+        });
     }
 
     private void AddGoal(String goalTitle, int GoalValue){
@@ -72,4 +105,7 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
         goal_recycler.setAdapter(goalAdaptor);
         goal_recycler.setLayoutManager(new LinearLayoutManager(this));
     }
+
+
+
 }
