@@ -23,22 +23,22 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         navView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            Intent intent;
-            if (itemId == R.id.Home_btn) {
-                intent = new Intent(this, HomeActivity.class);
-                startActivity(intent);
-                System.out.println("item1:" + item);
+            Intent intent = null;
 
-            } else if (itemId == R.id.Profile_btn) {
+            if (itemId == R.id.Home_btn && !this.getClass().equals(HomeActivity.class)) {
+                intent = new Intent(this, HomeActivity.class);
+            } else if (itemId == R.id.Profile_btn && !this.getClass().equals(ProfileActivity.class)) {
                 intent = new Intent(this, ProfileActivity.class);
-                startActivity(intent);
-                System.out.println("item2:" + item);
-            } else if (itemId == R.id.Notification_btn) {
+            } else if (itemId == R.id.Notification_btn && !this.getClass().equals(NotificationsActivity.class)) {
                 intent = new Intent(this, NotificationsActivity.class);
-                startActivity(intent);
-                System.out.println("item2:" + item);
             }
+
+            if (intent != null) {
+                startActivity(intent);
+            }
+
             return true;
         });
     }
+
 }
