@@ -29,6 +29,21 @@ public class NotificationsActivity extends NavigationActivity {
 
         // Sample data
         alarms.add(new Alarm("08:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("09:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("10:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("08:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("09:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("10:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("08:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("09:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("10:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("08:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("09:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("10:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("08:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("09:00 AM", "Daily", "Morning Alarm"));
+        alarms.add(new Alarm("10:00 AM", "Daily", "Morning Alarm"));
+
         adapter = new AlarmAdapter(alarms);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
