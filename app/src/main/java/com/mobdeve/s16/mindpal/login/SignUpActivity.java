@@ -1,4 +1,4 @@
-package com.mobdeve.s16.mindpal;
+package com.mobdeve.s16.mindpal.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.mobdeve.s16.mindpal.R;
+import com.mobdeve.s16.mindpal.login.MainActivity;
 
 public class SignUpActivity extends AppCompatActivity {
 
