@@ -58,9 +58,9 @@ public class featured_RecyclerAdaptor extends RecyclerView.Adapter<featured_Recy
         public MyFeatureHolder(@NonNull View itemView) {
             super(itemView);
 
-            FeatureTitle = itemView.findViewById(R.id.feature_title);
-            FeatureDescription = itemView.findViewById(R.id.feature_description);
-            FeatureThumbnail = itemView.findViewById(R.id.feature_thumbnail);
+            FeatureTitle = itemView.findViewById(R.id.meditate_title);
+            FeatureDescription = itemView.findViewById(R.id.meditate_description);
+            FeatureThumbnail = itemView.findViewById(R.id.meditate_thumbnail);
         }
     }
 }
