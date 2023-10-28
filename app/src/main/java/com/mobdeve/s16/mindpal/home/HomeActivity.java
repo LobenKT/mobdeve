@@ -5,14 +5,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.mobdeve.s16.mindpal.BaseActivity;
+import com.mobdeve.s16.mindpal.NavigationActivity;
 import com.mobdeve.s16.mindpal.R;
-import com.mobdeve.s16.mindpal.home.featured_RecyclerAdaptor;
-import com.mobdeve.s16.mindpal.home.featured_model;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends NavigationActivity {
 
     TextView WelcomeText;
     ArrayList<featured_model> featuredModels = new ArrayList<>();

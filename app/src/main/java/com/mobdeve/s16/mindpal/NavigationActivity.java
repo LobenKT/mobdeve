@@ -10,7 +10,7 @@ import com.mobdeve.s16.mindpal.profile.ProfileActivity;
 
 import android.content.Intent;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class NavigationActivity extends AppCompatActivity {
 
     BottomNavigationView navView;
     @Override

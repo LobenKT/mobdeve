@@ -1,18 +1,17 @@
 package com.mobdeve.s16.mindpal.notification;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.mobdeve.s16.mindpal.BaseActivity;
+import com.mobdeve.s16.mindpal.NavigationActivity;
 import com.mobdeve.s16.mindpal.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsActivity extends BaseActivity {
+public class NotificationsActivity extends NavigationActivity {
 
     private RecyclerView recyclerView;
     private FloatingActionButton addAlarmButton;
@@ -23,6 +22,7 @@ public class NotificationsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        setupBottomNavigation();
 
         recyclerView = findViewById(R.id.alarms_recyclerView);
         addAlarmButton = findViewById(R.id.add_alarm_btn);
@@ -37,6 +37,9 @@ public class NotificationsActivity extends BaseActivity {
             AddAlarmDialogFragment addAlarmDialog = new AddAlarmDialogFragment();
             addAlarmDialog.show(getSupportFragmentManager(), "Add Alarm Dialog");
         });
+
+
+
 
     }
 }
