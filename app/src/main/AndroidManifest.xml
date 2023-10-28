@@ -22,7 +22,7 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".NotificationsActivity"
+            android:name=".notification.NotificationsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

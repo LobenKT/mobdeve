@@ -1,4 +1,4 @@
-package com.mobdeve.s16.mindpal;
+package com.mobdeve.s16.mindpal.notification;
 
 public class Alarm {
     private String time;
