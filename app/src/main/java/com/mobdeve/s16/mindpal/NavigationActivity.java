@@ -21,6 +21,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
     protected void setupBottomNavigation() {
         navView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
 
+        // Setting the listener
         navView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             Intent intent = null;
@@ -35,10 +36,21 @@ public abstract class NavigationActivity extends AppCompatActivity {
 
             if (intent != null) {
                 startActivity(intent);
+                finish(); // Prevent stacking of activities
             }
 
             return true;
         });
+
+        // Setting the selected item based on the current activity
+        if (this.getClass().equals(HomeActivity.class)) {
+            navView.setSelectedItemId(R.id.Home_btn);
+        } else if (this.getClass().equals(ProfileActivity.class)) {
+            navView.setSelectedItemId(R.id.Profile_btn);
+        } else if (this.getClass().equals(NotificationsActivity.class)) {
+            navView.setSelectedItemId(R.id.Notification_btn);
+        }
     }
+
 
 }
