@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.squareup.picasso.Picasso;
 
 
 import com.mobdeve.s16.mindpal.R;
@@ -38,7 +39,9 @@ public class meditation_Adaptor extends RecyclerView.Adapter<meditation_Adaptor.
     public void onBindViewHolder(@NonNull meditation_Adaptor.MyMeditationHolder holder, int position) {
         holder.meditationTitle.setText(meditation_courses.get(position).getTitle());
         holder.meditationDescription.setText(meditation_courses.get(position).getDescription());
-        holder.meditationThumbnail.setImageResource(meditation_courses.get(position).getThumbnail());
+        String URL = meditation_courses.get(position).getThumbnail();
+        Picasso.get().load(URL).into(holder.meditationThumbnail);
+        //holder.meditationThumbnail.setImageResource(meditation_courses.get(position).getThumbnail());
     }
 
     @Override

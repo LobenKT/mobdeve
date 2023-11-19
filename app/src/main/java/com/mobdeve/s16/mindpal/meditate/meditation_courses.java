@@ -5,9 +5,9 @@ public class meditation_courses {
     String Category;
     String Title;
     String Description;
-    int Thumbnail;
+    String Thumbnail;
 
-    public meditation_courses(String category, String title, String description, int thumbnail) {
+    public meditation_courses(String category, String title, String description, String thumbnail) {
         Category = category;
         Title = title;
         Description = description;
@@ -26,7 +26,7 @@ public class meditation_courses {
         return Description;
     }
 
-    public int getThumbnail() {
+    public String getThumbnail() {
         return Thumbnail;
     }
 
@@ -42,7 +42,7 @@ public class meditation_courses {
         Description = description;
     }
 
-    public void setThumbnail(int thumbnail) {
+    public void setThumbnail(String thumbnail) {
         Thumbnail = thumbnail;
     }
 }
