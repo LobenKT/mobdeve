@@ -1,7 +1,11 @@
 package com.mobdeve.s16.mindpal.notification;
 
 import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,12 +15,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.mobdeve.s16.mindpal.R;
+
+import java.util.Calendar;
 
 public class AddAlarmDialogFragment extends DialogFragment {
 
@@ -28,6 +35,10 @@ public class AddAlarmDialogFragment extends DialogFragment {
     private CheckBox[] dayCheckboxes;
     private final String[] dayLabels = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     private final int[] checkboxIds = {R.id.sunCheckbox, R.id.monCheckbox, R.id.tueCheckbox, R.id.wedCheckbox, R.id.thuCheckbox, R.id.friCheckbox, R.id.satCheckbox};
+    public interface OnInputListener {
+        void sendInput(String Label, int hours, int minutes);
+    }
+    public OnInputListener inputListener;
 
     @NonNull
     @Override
@@ -42,6 +53,10 @@ public class AddAlarmDialogFragment extends DialogFragment {
         labelEditText = view.findViewById(R.id.labelEditText);
         daysLayout = view.findViewById(R.id.daysLayout);
         addAlarmButton = view.findViewById(R.id.addAlarmButton);
+        Calendar c = Calendar.getInstance();
+
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
 
         dayCheckboxes = new CheckBox[7];
         for (int i = 0; i < 7; i++) {
@@ -67,11 +82,17 @@ public class AddAlarmDialogFragment extends DialogFragment {
             // Logic to capture the alarm details, including selected days
             String selectedDays = getSelectedDays();
             // TODO: Save the alarm with the given details
-//            dismiss();
+            String Label = labelEditText.getText().toString();
+            int hours = timePicker.getHour();
+            int minutes = timePicker.getMinute();
+            inputListener.sendInput(Label,hours, minutes);
+            Toast.makeText(getActivity(), "Alarm Added", Toast.LENGTH_LONG).show();
+            dismiss();
         });
 
         builder.setView(view)
                 .setTitle("Add Alarm");
+
         return builder.create();
     }
 
@@ -83,6 +104,17 @@ public class AddAlarmDialogFragment extends DialogFragment {
             }
         }
         return days.toString().trim();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            inputListener = (OnInputListener) getActivity();
+
+        }catch (ClassCastException e){
+            Log.e("DialogTag", "onAttach: ClassCastException");
+        }
     }
 }
 
