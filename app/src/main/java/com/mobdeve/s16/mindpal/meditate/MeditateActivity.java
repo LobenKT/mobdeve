@@ -102,6 +102,15 @@ public class MeditateActivity extends NavigationActivity {
     class YoutubeVideo extends AsyncTask<String, Void, String>{
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            findViewById(R.id.loader).setVisibility(View.VISIBLE);
+            findViewById(R.id.meditate_recycler).setVisibility(View.GONE);
+            findViewById(R.id.errorText).setVisibility(View.GONE);
+        }
+
+        @Override
         protected String doInBackground(String... strings) {
             String response = HttpRequest.excuteGet("https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&key=" + API);
             return response;
@@ -116,12 +125,15 @@ public class MeditateActivity extends NavigationActivity {
                     JSONObject JSONObject1= item.getJSONObject(i);
                     JSONObject jsonSnippet = JSONObject1.getJSONObject("snippet");
                     String videoTitle = jsonSnippet.getString("title");
+                    String videoDesc = jsonSnippet.getString("description");
                     String videoThumbnail = jsonSnippet.getJSONObject("thumbnails").getJSONObject("medium").getString("url");
-                    meditationCourses.add(new meditation_courses("Sleep", videoTitle, "You Feel Sleep now", videoThumbnail));
+                    meditationCourses.add(new meditation_courses("Sleep", videoTitle, videoDesc, videoThumbnail));
                     Log.d("TAG", "onPostExecute: videoTitle " + videoTitle);
                 }
                 meditation_recycler.setAdapter(meditationAdaptor);
                 meditation_recycler.setLayoutManager(new LinearLayoutManager(MeditateActivity.this));
+                findViewById(R.id.loader).setVisibility(View.GONE);
+                findViewById(R.id.meditate_recycler).setVisibility(View.VISIBLE);
                 //Toast.makeText(MeditateActivity.this, "Video Title: " + videoTitle, Toast.LENGTH_LONG).show();
             }catch (JSONException e){
                 Toast.makeText(MeditateActivity.this, "Sira Pre", Toast.LENGTH_LONG).show();
