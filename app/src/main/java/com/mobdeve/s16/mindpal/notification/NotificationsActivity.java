@@ -19,6 +19,7 @@ import com.mobdeve.s16.mindpal.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class NotificationsActivity extends NavigationActivity implements AddAlarmDialogFragment.OnInputListener {
 
@@ -77,12 +78,33 @@ public class NotificationsActivity extends NavigationActivity implements AddAlar
 
     @Override
     public void sendInput(String Label, int hours, int minutes) {
-        Log.d("Tag" , "got input for hours: " + hours + " Minutes: " + minutes);
         Calendar c = Calendar.getInstance();
+
+        //Set Up For Arraylist / add to alarms list
+        String day = c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault());
+        String Time = FormatTimeString(hours, minutes);
+        alarms.add(new Alarm(Time, "Daily", Label));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Set the Alarm
         c.set(Calendar.HOUR_OF_DAY, hours);
         c.set(Calendar.MINUTE, minutes);
         c.set(Calendar.SECOND, 0);
 
         startAlarm(c, Label);
     }
+
+    public String FormatTimeString (int hours, int minutes){
+        String Time;
+        if (hours > 12){
+            hours = hours - 12;
+            Time = hours + ":" + minutes + " PM";
+        }
+        else {
+            Time = hours + ":" + minutes + " AM";
+        }
+        return Time;
+    }
+
 }
