@@ -62,7 +62,10 @@ public class HomeActivity extends NavigationActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Article> articles = response.body().getArticles();
                     featuredModels.clear(); // Clear existing data
-                    for (Article article : articles) {
+
+                    // Add only the first three articles from the response
+                    for (int i = 0; i < articles.size() && i < 3; i++) {
+                        Article article = articles.get(i);
                         featuredModels.add(new featured_model(
                                 article.getTitle(),
                                 article.getDescription(),
