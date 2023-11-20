@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     Button SignUpButton;
     EditText UserName;
 
+    EditText Password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,16 +28,28 @@ public class MainActivity extends AppCompatActivity {
 
         LogInButton = (Button)findViewById(R.id.login_button);
         SignUpButton = (Button)findViewById(R.id.signup_button);
-        UserName = (EditText) findViewById(R.id.enter_username);
+        UserName = (EditText) findViewById(R.id.editTextUsername);
+        Password = (EditText) findViewById(R.id.editTextPassword);
+
+        // Inside MainActivity
 
         LogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                openHomeActivity();
+                String username = UserName.getText().toString();
+                String password = Password.getText().toString(); // Get password from EditText
 
+                DatabaseHelper db = new DatabaseHelper(MainActivity.this);
+
+                if (db.checkUser(username, password)) {
+                    Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                    openHomeActivity();
+                } else {
+                    Toast.makeText(MainActivity.this, "Login failed. Invalid username or password.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
 
         SignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
