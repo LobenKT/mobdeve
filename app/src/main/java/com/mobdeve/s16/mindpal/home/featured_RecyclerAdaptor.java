@@ -1,15 +1,19 @@
 package com.mobdeve.s16.mindpal.home;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s16.mindpal.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -36,10 +40,21 @@ public class featured_RecyclerAdaptor extends RecyclerView.Adapter<featured_Recy
     connects data to each xml card for article.
      */
     @Override
-    public void onBindViewHolder(@NonNull featured_RecyclerAdaptor.MyFeatureHolder holder, int position) {
-        holder.FeatureTitle.setText(featuredModels.get(position).getFeatured_Title());
-        holder.FeatureDescription.setText(featuredModels.get(position).getFeatured_Description());
-        holder.FeatureThumbnail.setImageResource(featuredModels.get(position).getFeatured_thumbnail());
+    public void onBindViewHolder(@NonNull MyFeatureHolder holder, int position) {
+        featured_model model = featuredModels.get(position);
+        holder.FeatureTitle.setText(model.getFeatured_Title());
+        holder.FeatureDescription.setText(model.getFeatured_Description());
+        Picasso.get().load(model.getFeatured_thumbnail()).into(holder.FeatureThumbnail);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Intent to open the article URL
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(model.getArticleUrl()));
+                context.startActivity(i);
+            }
+        });
     }
 
     /*
@@ -49,6 +64,7 @@ public class featured_RecyclerAdaptor extends RecyclerView.Adapter<featured_Recy
     public int getItemCount() {
         return featuredModels.size();
     }
+
 
     public static class MyFeatureHolder extends RecyclerView.ViewHolder{
 
