@@ -18,5 +18,6 @@
     <string name="fri">Fri</string>
     <string name="sat">Sat</string>
     <string name="sun">Sun</string>
+    <string name="quote">I am an inspiring quote</string>
 
 </resources>

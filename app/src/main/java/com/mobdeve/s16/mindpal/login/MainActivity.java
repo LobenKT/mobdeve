@@ -1,14 +1,14 @@
 package com.mobdeve.s16.mindpal.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.mobdeve.s16.mindpal.R;
 import com.mobdeve.s16.mindpal.home.HomeActivity;
@@ -60,10 +60,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openHomeActivity(){
-        Intent intent = new Intent (this, HomeActivity.class);
-        intent.putExtra("KeyUsername" , UserName.getText().toString());
+        String username = UserName.getText().toString();
+
+        // Save username to SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Username", username);
+        editor.apply();
+
+        // Start HomeActivity
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
+
 
     public void openSignUpActivity() {
         Intent intent = new Intent(this, SignUpActivity.class);

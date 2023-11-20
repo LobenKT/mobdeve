@@ -1,14 +1,27 @@
 package com.mobdeve.s16.mindpal.home;
 
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.mobdeve.s16.mindpal.NavigationActivity;
 import com.mobdeve.s16.mindpal.R;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +50,12 @@ public class HomeActivity extends NavigationActivity {
         feature_recycler.setNestedScrollingEnabled(false);
 
         WelcomeText = findViewById(R.id.Welcome_Message);
-        String username = getIntent().getStringExtra("KeyUsername");
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
+        String username = sharedPreferences.getString("Username", "User");
         WelcomeText.setText("Welcome, " + username);
+
+        TextView inspiringQuote = findViewById(R.id.inspiringQuote);
+        new FetchQuoteTask(inspiringQuote).execute();
 
         featureAdaptor = new featured_RecyclerAdaptor(this, featuredModels);
         feature_recycler.setAdapter(featureAdaptor);
@@ -46,6 +63,55 @@ public class HomeActivity extends NavigationActivity {
 
         loadArticles();
     }
+
+    private class FetchQuoteTask extends AsyncTask<Void, Void, String> {
+        private TextView textView;
+
+        public FetchQuoteTask(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL("https://api.api-ninjas.com/v1/quotes?category=life");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty("accept", "application/json");
+                connection.setRequestProperty("X-Api-Key", "f22659FQ4udk5/UKfTsB4Q==Wd2RPxYKk5ta828u"); // Replace with your API key
+
+                InputStream responseStream = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(responseStream));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+
+                JSONArray jsonArray = new JSONArray(response.toString());
+                if (jsonArray.length() > 0) {
+                    JSONObject firstQuote = jsonArray.getJSONObject(0);
+                    return firstQuote.getString("quote");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("FetchQuoteTask", "Error: " + e.getMessage());
+            }
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String quote) {
+            if (quote != null && textView != null) {
+                textView.setText(quote);
+            } else {
+                Log.e("FetchQuoteTask", "Quote is null");
+            }
+        }
+    }
+
+
 
     private void loadArticles() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -81,8 +147,15 @@ public class HomeActivity extends NavigationActivity {
 
             @Override
             public void onFailure(Call<NewsResponse> call, Throwable t) {
-                // Handle failure
+                Snackbar.make(findViewById(android.R.id.content), "Error loading articles. Try again.", Snackbar.LENGTH_LONG)
+                        .setAction("RETRY", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                loadArticles(); // Retry loading articles
+                            }
+                        }).show();
             }
+
         });
     }
 }
