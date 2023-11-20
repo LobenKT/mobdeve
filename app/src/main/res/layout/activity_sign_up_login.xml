@@ -17,14 +17,14 @@
         android:textColor="#738c89"
         android:textSize="48sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/enter_username"
+        app:layout_constraintBottom_toTopOf="@+id/editTextUsername"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/enter_username"
+        android:id="@+id/editTextUsername"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/TitleText" />
 
     <EditText
-        android:id="@+id/enter_password"
+        android:id="@+id/editTextPassword"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -52,7 +52,7 @@
         android:textColorHint="#B0FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_username" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />
 
     <Button
         android:id="@+id/CreateAccount_Button"
@@ -64,6 +64,6 @@
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_password" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
