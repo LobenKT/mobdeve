@@ -57,9 +57,9 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
 
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
         String username = sharedPreferences.getString("Username", "User");
-        String ImageUri = sharedPreferences.getString("ProfileImage", "Image");
+        //String ImageUri = sharedPreferences.getString("ProfileImage", "Image");
         usernameText.setText(username);
-        profileImage.setImageURI(Uri.parse(ImageUri));
+        //profileImage.setImageURI(Uri.parse(ImageUri));
 
         goalModels.add(new goals_model("Test Goal", "Ongoing"));
         goalModels.add(new goals_model("Test Goal2", "Completed"));
