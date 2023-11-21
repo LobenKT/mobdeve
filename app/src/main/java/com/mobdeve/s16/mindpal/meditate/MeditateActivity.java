@@ -112,7 +112,7 @@ public class MeditateActivity extends NavigationActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            String response = HttpRequest.excuteGet("https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&key=" + API);
+            String response = HttpRequest.excuteGet("https://www.googleapis.com/youtube/v3/search?part=snippet&q=sleep+meditation+exercises&maxResults=5&key=" + API);
             return response;
         }
 
@@ -123,12 +123,16 @@ public class MeditateActivity extends NavigationActivity {
                 JSONArray item = jsonObj.getJSONArray("items");
                 for (int i = 0; i < item.length() ; i++) {
                     JSONObject JSONObject1= item.getJSONObject(i);
-                    JSONObject jsonSnippet = JSONObject1.getJSONObject("snippet");
-                    String videoTitle = jsonSnippet.getString("title");
-                    String videoDesc = jsonSnippet.getString("description");
-                    String videoThumbnail = jsonSnippet.getJSONObject("thumbnails").getJSONObject("medium").getString("url");
-                    meditationCourses.add(new meditation_courses("Sleep", videoTitle, videoDesc, videoThumbnail));
-                    Log.d("TAG", "onPostExecute: videoTitle " + videoTitle);
+                    JSONObject jsonID = JSONObject1.getJSONObject("id");
+                    if (jsonID.getString("kind").equalsIgnoreCase("youtube#video")) {
+                        JSONObject jsonSnippet = JSONObject1.getJSONObject("snippet");
+                        String videoTitle = jsonSnippet.getString("title");
+                        String videoDesc = jsonSnippet.getString("description");
+                        String videoThumbnail = jsonSnippet.getJSONObject("thumbnails").getJSONObject("medium").getString("url");
+                        String videoID = JSONObject1.getJSONObject("id").getString("videoId");
+                        meditationCourses.add(new meditation_courses("Sleep", videoTitle, videoDesc, videoThumbnail, videoID));
+                        Log.d("TAG", "onPostExecute: videoID " + videoID);
+                    }
                 }
                 meditation_recycler.setAdapter(meditationAdaptor);
                 meditation_recycler.setLayoutManager(new LinearLayoutManager(MeditateActivity.this));
@@ -146,7 +150,7 @@ public class MeditateActivity extends NavigationActivity {
         for (int i = 0 ; i < meditationCourses.size(); i++){
             if (meditationCourses.get(i).Category.equalsIgnoreCase("Sleep")){
                 CourseHolder = meditationCourses.get(i);
-                filteredCourses.add(new meditation_courses(CourseHolder.getCategory(), CourseHolder.getTitle(), CourseHolder.getDescription(), CourseHolder.getThumbnail()));
+                filteredCourses.add(new meditation_courses(CourseHolder.getCategory(), CourseHolder.getTitle(), CourseHolder.getDescription(), CourseHolder.getThumbnail(), CourseHolder.getVideoId()));
             }
         }
         meditationAdaptor = new meditation_Adaptor(this, filteredCourses);
@@ -159,7 +163,7 @@ public class MeditateActivity extends NavigationActivity {
         for (int i = 0 ; i < meditationCourses.size(); i++){
             if (meditationCourses.get(i).Category.equalsIgnoreCase("Focus")){
                 CourseHolder = meditationCourses.get(i);
-                filteredCourses.add(new meditation_courses(CourseHolder.getCategory(), CourseHolder.getTitle(), CourseHolder.getDescription(), CourseHolder.getThumbnail()));
+                filteredCourses.add(new meditation_courses(CourseHolder.getCategory(), CourseHolder.getTitle(), CourseHolder.getDescription(), CourseHolder.getThumbnail(),CourseHolder.getVideoId()));
             }
         }
         meditationAdaptor = new meditation_Adaptor(this, filteredCourses);
@@ -172,7 +176,7 @@ public class MeditateActivity extends NavigationActivity {
         for (int i = 0 ; i < meditationCourses.size(); i++){
             if (meditationCourses.get(i).Category.equalsIgnoreCase("Relax")){
                 CourseHolder = meditationCourses.get(i);
-                filteredCourses.add(new meditation_courses(CourseHolder.getCategory(), CourseHolder.getTitle(), CourseHolder.getDescription(), CourseHolder.getThumbnail()));
+                filteredCourses.add(new meditation_courses(CourseHolder.getCategory(), CourseHolder.getTitle(), CourseHolder.getDescription(), CourseHolder.getThumbnail(),CourseHolder.getVideoId()));
             }
         }
         meditationAdaptor = new meditation_Adaptor(this, filteredCourses);
@@ -185,7 +189,7 @@ public class MeditateActivity extends NavigationActivity {
         for (int i = 0 ; i < meditationCourses.size(); i++){
             if (meditationCourses.get(i).Category.equalsIgnoreCase("Happiness")){
                 CourseHolder = meditationCourses.get(i);
-                filteredCourses.add(new meditation_courses(CourseHolder.getCategory(), CourseHolder.getTitle(), CourseHolder.getDescription(), CourseHolder.getThumbnail()));
+                filteredCourses.add(new meditation_courses(CourseHolder.getCategory(), CourseHolder.getTitle(), CourseHolder.getDescription(), CourseHolder.getThumbnail(),CourseHolder.getVideoId()));
             }
         }
         meditationAdaptor = new meditation_Adaptor(this, filteredCourses);
