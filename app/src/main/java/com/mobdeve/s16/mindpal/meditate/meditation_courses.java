@@ -7,11 +7,14 @@ public class meditation_courses {
     String Description;
     String Thumbnail;
 
-    public meditation_courses(String category, String title, String description, String thumbnail) {
+    String VideoId;
+
+    public meditation_courses(String category, String title, String description, String thumbnail, String videoId) {
         Category = category;
         Title = title;
         Description = description;
         Thumbnail = thumbnail;
+        VideoId = videoId;
     }
 
     public String getCategory() {
@@ -29,6 +32,7 @@ public class meditation_courses {
     public String getThumbnail() {
         return Thumbnail;
     }
+    public String getVideoId(){return VideoId;}
 
     public void setCategory(String category) {
         Category = category;
@@ -45,4 +49,5 @@ public class meditation_courses {
     public void setThumbnail(String thumbnail) {
         Thumbnail = thumbnail;
     }
+    public void setVideoId(String videoId){VideoId = videoId;}
 }

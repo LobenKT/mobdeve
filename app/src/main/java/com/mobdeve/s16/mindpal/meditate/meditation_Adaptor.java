@@ -1,6 +1,8 @@
 package com.mobdeve.s16.mindpal.meditate;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +44,16 @@ public class meditation_Adaptor extends RecyclerView.Adapter<meditation_Adaptor.
         String URL = meditation_courses.get(position).getThumbnail();
         Picasso.get().load(URL).into(holder.meditationThumbnail);
         //holder.meditationThumbnail.setImageResource(meditation_courses.get(position).getThumbnail());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String YoutubeURL = "https://www.youtube.com/watch?v=" + meditation_courses.get(position).getVideoId();
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                Uri videoUri = Uri.parse(YoutubeURL);
+                intent.setData(videoUri);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
