@@ -96,10 +96,13 @@ public class MeditateActivity extends NavigationActivity {
             }
         });
 
-        new YoutubeVideo().execute();
+        new SleepVideo().execute();
+        new FocusVideo().execute();
+        new RelaxVideo().execute();
+        new HappyVideo().execute();
     }
 
-    class YoutubeVideo extends AsyncTask<String, Void, String>{
+    class SleepVideo extends AsyncTask<String, Void, String>{
 
         @Override
         protected void onPreExecute() {
@@ -131,6 +134,144 @@ public class MeditateActivity extends NavigationActivity {
                         String videoThumbnail = jsonSnippet.getJSONObject("thumbnails").getJSONObject("medium").getString("url");
                         String videoID = JSONObject1.getJSONObject("id").getString("videoId");
                         meditationCourses.add(new meditation_courses("Sleep", videoTitle, videoDesc, videoThumbnail, videoID));
+                        Log.d("TAG", "onPostExecute: videoID " + videoID);
+                    }
+                }
+                meditation_recycler.setAdapter(meditationAdaptor);
+                meditation_recycler.setLayoutManager(new LinearLayoutManager(MeditateActivity.this));
+                findViewById(R.id.loader).setVisibility(View.GONE);
+                findViewById(R.id.meditate_recycler).setVisibility(View.VISIBLE);
+                //Toast.makeText(MeditateActivity.this, "Video Title: " + videoTitle, Toast.LENGTH_LONG).show();
+            }catch (JSONException e){
+                Toast.makeText(MeditateActivity.this, "Sira Pre", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    class FocusVideo extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            findViewById(R.id.loader).setVisibility(View.VISIBLE);
+            findViewById(R.id.meditate_recycler).setVisibility(View.GONE);
+            findViewById(R.id.errorText).setVisibility(View.GONE);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String response = HttpRequest.excuteGet("https://www.googleapis.com/youtube/v3/search?part=snippet&q=Focus+Meditation+Exercise&maxResults=5&key=" + API);
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                JSONObject jsonObj = new JSONObject(result);
+                JSONArray item = jsonObj.getJSONArray("items");
+                for (int i = 0; i < item.length() ; i++) {
+                    JSONObject JSONObject1= item.getJSONObject(i);
+                    JSONObject jsonID = JSONObject1.getJSONObject("id");
+                    if (jsonID.getString("kind").equalsIgnoreCase("youtube#video")) {
+                        JSONObject jsonSnippet = JSONObject1.getJSONObject("snippet");
+                        String videoTitle = jsonSnippet.getString("title");
+                        String videoDesc = jsonSnippet.getString("description");
+                        String videoThumbnail = jsonSnippet.getJSONObject("thumbnails").getJSONObject("medium").getString("url");
+                        String videoID = JSONObject1.getJSONObject("id").getString("videoId");
+                        meditationCourses.add(new meditation_courses("Focus", videoTitle, videoDesc, videoThumbnail, videoID));
+                        Log.d("TAG", "onPostExecute: videoID " + videoID);
+                    }
+                }
+                meditation_recycler.setAdapter(meditationAdaptor);
+                meditation_recycler.setLayoutManager(new LinearLayoutManager(MeditateActivity.this));
+                findViewById(R.id.loader).setVisibility(View.GONE);
+                findViewById(R.id.meditate_recycler).setVisibility(View.VISIBLE);
+                //Toast.makeText(MeditateActivity.this, "Video Title: " + videoTitle, Toast.LENGTH_LONG).show();
+            }catch (JSONException e){
+                Toast.makeText(MeditateActivity.this, "Sira Pre", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    class RelaxVideo extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            findViewById(R.id.loader).setVisibility(View.VISIBLE);
+            findViewById(R.id.meditate_recycler).setVisibility(View.GONE);
+            findViewById(R.id.errorText).setVisibility(View.GONE);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String response = HttpRequest.excuteGet("https://www.googleapis.com/youtube/v3/search?part=snippet&q=meditation+for+relaxation+and+inner+peace&maxResults=5&key=" + API);
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                JSONObject jsonObj = new JSONObject(result);
+                JSONArray item = jsonObj.getJSONArray("items");
+                for (int i = 0; i < item.length() ; i++) {
+                    JSONObject JSONObject1= item.getJSONObject(i);
+                    JSONObject jsonID = JSONObject1.getJSONObject("id");
+                    if (jsonID.getString("kind").equalsIgnoreCase("youtube#video")) {
+                        JSONObject jsonSnippet = JSONObject1.getJSONObject("snippet");
+                        String videoTitle = jsonSnippet.getString("title");
+                        String videoDesc = jsonSnippet.getString("description");
+                        String videoThumbnail = jsonSnippet.getJSONObject("thumbnails").getJSONObject("medium").getString("url");
+                        String videoID = JSONObject1.getJSONObject("id").getString("videoId");
+                        meditationCourses.add(new meditation_courses("Relax", videoTitle, videoDesc, videoThumbnail, videoID));
+                        Log.d("TAG", "onPostExecute: videoID " + videoID);
+                    }
+                }
+                meditation_recycler.setAdapter(meditationAdaptor);
+                meditation_recycler.setLayoutManager(new LinearLayoutManager(MeditateActivity.this));
+                findViewById(R.id.loader).setVisibility(View.GONE);
+                findViewById(R.id.meditate_recycler).setVisibility(View.VISIBLE);
+                //Toast.makeText(MeditateActivity.this, "Video Title: " + videoTitle, Toast.LENGTH_LONG).show();
+            }catch (JSONException e){
+                Toast.makeText(MeditateActivity.this, "Sira Pre", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    class HappyVideo extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            findViewById(R.id.loader).setVisibility(View.VISIBLE);
+            findViewById(R.id.meditate_recycler).setVisibility(View.GONE);
+            findViewById(R.id.errorText).setVisibility(View.GONE);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String response = HttpRequest.excuteGet("https://www.googleapis.com/youtube/v3/search?part=snippet&q=meditation+for+happiness+and+positivity&maxResults=5&key=" + API);
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                JSONObject jsonObj = new JSONObject(result);
+                JSONArray item = jsonObj.getJSONArray("items");
+                for (int i = 0; i < item.length() ; i++) {
+                    JSONObject JSONObject1= item.getJSONObject(i);
+                    JSONObject jsonID = JSONObject1.getJSONObject("id");
+                    if (jsonID.getString("kind").equalsIgnoreCase("youtube#video")) {
+                        JSONObject jsonSnippet = JSONObject1.getJSONObject("snippet");
+                        String videoTitle = jsonSnippet.getString("title");
+                        String videoDesc = jsonSnippet.getString("description");
+                        String videoThumbnail = jsonSnippet.getJSONObject("thumbnails").getJSONObject("medium").getString("url");
+                        String videoID = JSONObject1.getJSONObject("id").getString("videoId");
+                        meditationCourses.add(new meditation_courses("Happiness", videoTitle, videoDesc, videoThumbnail, videoID));
                         Log.d("TAG", "onPostExecute: videoID " + videoID);
                     }
                 }
