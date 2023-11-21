@@ -1,15 +1,25 @@
 package com.mobdeve.s16.mindpal.profile;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.mobdeve.s16.mindpal.R;
 import com.mobdeve.s16.mindpal.home.HomeActivity;
 
@@ -71,6 +81,7 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.change_profile) {
                             // Handle change profile action
+                            pickImage();
                             return true;
                         } else if (item.getItemId() == R.id.change_username) {
                             // Handle change username action
@@ -115,5 +126,18 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
     }
 
 
+    private void pickImage(){
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 3);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && data != null){
+            Uri selectedImage = data.getData();
+            profileImage.setImageURI(selectedImage);
+        }
+    }
 }
