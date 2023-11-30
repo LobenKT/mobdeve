@@ -63,7 +63,8 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
         String ImageUri = dbHelper.getImage(username);
         Log.d("TAG", "Retrieved string: " + ImageUri);
         usernameText.setText(username);
-        profileImage.setImageURI(Uri.parse(ImageUri));
+        Uri image = Uri.parse(ImageUri);
+        profileImage.setImageURI(image);
 
         goalModels.add(new goals_model("Test Goal", "Ongoing"));
         goalModels.add(new goals_model("Test Goal2", "Completed"));
@@ -149,14 +150,12 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
         if(resultCode == RESULT_OK && data != null){
             Uri selectedImage = data.getData();
             SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
             String strURI = selectedImage.toString();
-            editor.putString("ProfileImage" , strURI);
-            editor.apply();
             String username = sharedPreferences.getString("Username", "User");
             DatabaseHelper dbHelper = new DatabaseHelper(ProfileActivity.this);
             dbHelper.updateImage(strURI, username);
-            //profileImage.setImageURI(selectedImage);
+            Log.d("TAG", "Retrieved string: " + strURI);
+            profileImage.setImageURI(selectedImage);
         }
     }
 
