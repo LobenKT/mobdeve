@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.mobdeve.s16.mindpal.R;
 import com.mobdeve.s16.mindpal.home.HomeActivity;
+import com.mobdeve.s16.mindpal.login.DatabaseHelper;
 
 import java.util.ArrayList;
 
@@ -56,10 +58,12 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
         addGoal = (Button) findViewById(R.id.add_Goal_btn);
 
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
         String username = sharedPreferences.getString("Username", "User");
-        //String ImageUri = sharedPreferences.getString("ProfileImage", "Image");
+        String ImageUri = dbHelper.getImage(username);
+        Log.d("TAG", "Retrieved string: " + ImageUri);
         usernameText.setText(username);
-        //profileImage.setImageURI(Uri.parse(ImageUri));
+        profileImage.setImageURI(Uri.parse(ImageUri));
 
         goalModels.add(new goals_model("Test Goal", "Ongoing"));
         goalModels.add(new goals_model("Test Goal2", "Completed"));
@@ -149,7 +153,10 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
             String strURI = selectedImage.toString();
             editor.putString("ProfileImage" , strURI);
             editor.apply();
-            profileImage.setImageURI(selectedImage);
+            String username = sharedPreferences.getString("Username", "User");
+            DatabaseHelper dbHelper = new DatabaseHelper(ProfileActivity.this);
+            dbHelper.updateImage(strURI, username);
+            //profileImage.setImageURI(selectedImage);
         }
     }
 
