@@ -2,7 +2,9 @@ package com.mobdeve.s16.mindpal.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,16 +28,18 @@ public class SignUpActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsername); // Replace with your actual ID
         editTextPassword = findViewById(R.id.editTextPassword); // Replace with your actual ID
         signUpButton = findViewById(R.id.CreateAccount_Button);
+        Uri uri = getUriToDrawable(this, R.drawable.profile_asset);
+        String image = uri.toString();
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerNewUser();
+                registerNewUser(image);
             }
         });
     }
 
-    private void registerNewUser() {
+    private void registerNewUser(String image) {
         String username = editTextUsername.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
@@ -47,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Add user to the database
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        dbHelper.addUser(username, password);
+        dbHelper.addUser(username, password, image);
 
         // Notify user
         Toast.makeText(SignUpActivity.this, "Account created, Please login with your credentials", Toast.LENGTH_SHORT).show();
@@ -59,5 +63,9 @@ public class SignUpActivity extends AppCompatActivity {
     private void openLoginActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+    public static Uri getUriToDrawable(Context context, int drawableId) {
+        Uri imageUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + drawableId);
+        return imageUri;
     }
 }
