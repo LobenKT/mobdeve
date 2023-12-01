@@ -29,7 +29,7 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
     TextView usernameText;
     ImageView profileImage;
     ArrayList<goals_model> goalModels = new ArrayList<>();
-    Button addGoal;
+    Button addGoal, moodHistory;
     RecyclerView goal_recycler;
     goal_RecyclerViewAdaptor goalAdaptor;
     NameDialog nameDialog;
@@ -63,6 +63,14 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
         usernameText.setText(username);
         Uri image = Uri.parse(ImageUri);
         profileImage.setImageURI(image);
+
+        moodHistory = (Button) findViewById(R.id.mood_history_Button);
+        moodHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHistory();
+            }
+        });
 
         goalModels.add(new goals_model("Test Goal", "Ongoing"));
         goalModels.add(new goals_model("Test Goal2", "Completed"));
@@ -165,6 +173,11 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
             Log.d("TAG", "Retrieved string: " + strURI);
             profileImage.setImageURI(selectedImage);
         }
+    }
+
+    private void viewHistory(){
+        Intent intent = new Intent(ProfileActivity.this, View_MoodHistory.class);
+        startActivity(intent);
     }
 
 }

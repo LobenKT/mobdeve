@@ -30,7 +30,7 @@ public class MoodDialog  extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.checkin_mood_profile, null);
+        View view = inflater.inflate(R.layout.checkin_mood_home, null);
         inputMood = view.findViewById(R.id.Input_Mood);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPrefs", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("Username", "User");

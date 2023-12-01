@@ -15,7 +15,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.mobdeve.s16.mindpal.NavigationActivity;
 import com.mobdeve.s16.mindpal.R;
 import com.mobdeve.s16.mindpal.login.DatabaseHelper;
-import com.mobdeve.s16.mindpal.profile.ConfirmDialog;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -67,7 +66,7 @@ public class HomeActivity extends NavigationActivity {
         new FetchQuoteTask(inspiringQuote).execute();
 
         dailyMood = (TextView) findViewById(R.id.daily_Mood);
-        checkIn_btn = (Button) findViewById(R.id.Check_In_Button);
+        checkIn_btn = (Button) findViewById(R.id.mood_history_Button);
         checkIN_Status(username);
         checkIn_btn.setOnClickListener(new View.OnClickListener() {
             @Override

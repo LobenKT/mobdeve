@@ -7,16 +7,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.mobdeve.s16.mindpal.profile.Mood_Model;
+
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDatabase";
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 11;
     private static final String TABLE_USERS = "users";
     private static final String TABLE_MOOD = "mood";
     private static final String MOOD_USERNAME = "mood_username";
     private static final String MOOD_ID = "mood_id";
-    private static final String MOOD_CONTENT = "mood_content";
-    private static final String MOOD_Date = "mood_date";
+    public static final String MOOD_CONTENT = "mood_content";
+    public static final String MOOD_Date = "mood_date";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
@@ -116,6 +120,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.d("TAG", "Retrieved string: " + mood);
         }
         return mood;
+    }
+
+    public ArrayList<Mood_Model> getMood_History (String username){
+        ArrayList<Mood_Model> list = new ArrayList<>();
+        String[] columns = new String[]{MOOD_CONTENT , MOOD_Date};
+        String selection = MOOD_USERNAME + " = ?";
+        String[] selectionArgs = {username};
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_MOOD, columns, selection, selectionArgs, null, null, null);
+        while (cursor.moveToNext()){
+            list.add(new Mood_Model(cursor.getString(0), cursor.getString(1) ));
+            Log.d("TAG", "Retrieved string: from Cursor " + cursor.getString(0));
+        }
+        return list;
     }
 
     public void updateImage (String image, String name){
