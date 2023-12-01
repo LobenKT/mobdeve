@@ -71,6 +71,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("TAG", "Retrieved string: " + image);
     }
 
+    public void updateUserName (String name, String newName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values= new ContentValues();
+        values.put(COLUMN_USERNAME, newName);
+        db.update(TABLE_USERS, values,COLUMN_USERNAME + " = " + "'"+name+"'", null );
+    }
     public String getImage(String name){
         String image = "";
         SQLiteDatabase db = getReadableDatabase();
