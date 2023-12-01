@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.mobdeve.s16.mindpal.R;
 import com.mobdeve.s16.mindpal.home.HomeActivity;
+import com.mobdeve.s16.mindpal.home.MoodDialog;
 import com.mobdeve.s16.mindpal.login.DatabaseHelper;
 
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
     goal_RecyclerViewAdaptor goalAdaptor;
     NameDialog nameDialog;
     ConfirmDialog confirmDialog;
+
+    MoodDialog moodDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -10,8 +10,13 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDatabase";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 10;
     private static final String TABLE_USERS = "users";
+    private static final String TABLE_MOOD = "mood";
+    private static final String MOOD_USERNAME = "mood_username";
+    private static final String MOOD_ID = "mood_id";
+    private static final String MOOD_CONTENT = "mood_content";
+    private static final String MOOD_Date = "mood_date";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
@@ -35,8 +40,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + COLUMN_PASSWORD + " TEXT" + ")";
             db.execSQL(CREATE_USERS_TABLE);
         }
-        if (oldVersion < DATABASE_VERSION) {
+        if (oldVersion < 4) {
+
             db.execSQL("ALTER TABLE " + TABLE_USERS + " ADD COLUMN " + COLUMN_IMAGE + " TEXT");
+        }
+        if (oldVersion < 9) {
+            //db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOOD);
+            String CREATE_MOOD_TABLE = "CREATE TABLE " + TABLE_MOOD + "("
+                    + MOOD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + MOOD_USERNAME + "TEXT,"
+                    + MOOD_CONTENT + " TEXT,"
+                    + MOOD_Date + " TEXT" + ")";
+
+            db.execSQL(CREATE_MOOD_TABLE);
+        }
+        if (oldVersion < 10){
+            db.execSQL("ALTER TABLE " + TABLE_MOOD + " ADD COLUMN " + MOOD_USERNAME + " TEXT");
         }
     }
 
@@ -50,6 +69,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void addMood (String username, String content, String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MOOD_USERNAME, username);
+        values.put(MOOD_CONTENT, content);
+        values.put (MOOD_Date, date);
+        db.insert(TABLE_MOOD, null, values);
+        Log.d("TAG", "Successfully Added Mood: " + username + content + date);
+        db.close();
+    }
+
+    public boolean checkedIn (String username, String date){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_MOOD, new String[]{MOOD_ID},
+                MOOD_USERNAME + "=? AND " + MOOD_Date + "=?",
+                new String[]{username, date}, null, null, null);
+
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+
+        return cursorCount > 0;
+    }
+
     public boolean checkUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_USERS, new String[]{COLUMN_ID},
@@ -61,6 +104,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return cursorCount > 0;
+    }
+    public String getMood (String username, String date){
+        String mood = "";
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT " + MOOD_CONTENT + " FROM " + TABLE_MOOD + " WHERE " + MOOD_USERNAME + " = " + "'"+username+"' AND " + MOOD_Date + " = " + "'"+date+"'";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor !=null){
+            cursor.moveToFirst();
+            mood = cursor.getString(0);
+            Log.d("TAG", "Retrieved string: " + mood);
+        }
+        return mood;
     }
 
     public void updateImage (String image, String name){
