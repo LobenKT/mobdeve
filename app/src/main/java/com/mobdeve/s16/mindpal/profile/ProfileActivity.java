@@ -1,9 +1,5 @@
 package com.mobdeve.s16.mindpal.profile;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mobdeve.s16.mindpal.R;
 import com.mobdeve.s16.mindpal.home.HomeActivity;
@@ -28,7 +23,7 @@ import com.mobdeve.s16.mindpal.login.DatabaseHelper;
 
 import java.util.ArrayList;
 
-public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDialogListener {
+public class ProfileActivity extends HomeActivity implements NameDialog.NameDialogListener {
 
     TextView usernameText;
     ImageView profileImage;
@@ -36,7 +31,7 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
     Button addGoal;
     RecyclerView goal_recycler;
     goal_RecyclerViewAdaptor goalAdaptor;
-    GoalDialog goalDialog;
+    NameDialog nameDialog;
     ConfirmDialog confirmDialog;
 
     @Override
@@ -77,7 +72,8 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
         addGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddGoal("New Goal" , 100);
+
+                //AddGoal("New Goal" , 100);
             }
         });
 
@@ -97,6 +93,7 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
                             return true;
                         } else if (item.getItemId() == R.id.change_username) {
                             // Handle change username action
+                            changeName();
                             return true;
                         } else if (item.getItemId() == R.id.logout) {
                             // Handle logout action
@@ -117,10 +114,10 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
         });
     }
 
-    private void AddGoal(String goalTitle, int GoalValue){
+    private void changeName(){
 
-        goalDialog = new GoalDialog();
-        goalDialog.show(getSupportFragmentManager(), "Enter Goal");
+        nameDialog = new NameDialog();
+        nameDialog.show(getSupportFragmentManager(), "Enter new name");
     }
 
     private void confirmation(){
@@ -129,12 +126,20 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
     }
 
     @Override
-    public void applyTexts(String GoalTitle) {
+    public void applyTexts(String NewName) {
 
-        goalModels.add(new goals_model(GoalTitle, "Ongoing"));
+        /*goalModels.add(new goals_model(GoalTitle, "Ongoing"));
         goalAdaptor = new goal_RecyclerViewAdaptor(this , goalModels);
         goal_recycler.setAdapter(goalAdaptor);
-        goal_recycler.setLayoutManager(new LinearLayoutManager(this));
+        goal_recycler.setLayoutManager(new LinearLayoutManager(this)); */
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        String username = sharedPreferences.getString("Username", "User");
+        dbHelper.updateUserName(username, NewName);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Username", NewName);
+        editor.apply();
+        usernameText.setText(NewName);
     }
 
 
