@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.mobdeve.s16.mindpal.NavigationActivity;
 import com.mobdeve.s16.mindpal.R;
+import com.mobdeve.s16.mindpal.login.DatabaseHelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,7 +24,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,10 +39,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeActivity extends NavigationActivity {
 
-    TextView WelcomeText;
+    TextView WelcomeText, dailyMood;
     ArrayList<featured_model> featuredModels = new ArrayList<>();
+    Button checkIn_btn;
     RecyclerView feature_recycler;
     featured_RecyclerAdaptor featureAdaptor;
+    MoodDialog moodDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +65,44 @@ public class HomeActivity extends NavigationActivity {
         TextView inspiringQuote = findViewById(R.id.inspiringQuote);
         new FetchQuoteTask(inspiringQuote).execute();
 
+        dailyMood = (TextView) findViewById(R.id.daily_Mood);
+        checkIn_btn = (Button) findViewById(R.id.mood_history_Button);
+        checkIN_Status(username);
+        checkIn_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddMood();
+            }
+        });
+
         featureAdaptor = new featured_RecyclerAdaptor(this, featuredModels);
         feature_recycler.setAdapter(featureAdaptor);
         feature_recycler.setLayoutManager(new LinearLayoutManager(this));
 
         loadArticles();
     }
+    private void AddMood(){
+        moodDialog = new MoodDialog();
+        moodDialog.show(getSupportFragmentManager(), "Add Mood");
+    }
 
+    private void checkIN_Status(String username){
+        DatabaseHelper dbhelper = new DatabaseHelper(HomeActivity.this);
+        Calendar calendar = Calendar.getInstance();
+        Date Today = calendar.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        String formattedDate = dateFormat.format(Today);
+        if (dbhelper.checkedIn(username, formattedDate)){
+            checkIn_btn.setEnabled(false);
+            String mood = dbhelper.getMood(username, formattedDate);
+            dailyMood.setText("Today's Mood: " + mood);
+
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("DailyMood", mood);
+            editor.apply();
+        }
+    }
     private class FetchQuoteTask extends AsyncTask<Void, Void, String> {
         private TextView textView;
 

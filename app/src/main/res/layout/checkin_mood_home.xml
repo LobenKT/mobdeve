@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/Input_Mood"
         android:layout_width="365dp"
         android:layout_height="70dp"
         android:layout_marginStart="17dp"

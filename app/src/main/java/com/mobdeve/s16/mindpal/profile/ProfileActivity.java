@@ -1,9 +1,5 @@
 package com.mobdeve.s16.mindpal.profile;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,24 +16,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mobdeve.s16.mindpal.R;
 import com.mobdeve.s16.mindpal.home.HomeActivity;
+import com.mobdeve.s16.mindpal.home.MoodDialog;
 import com.mobdeve.s16.mindpal.login.DatabaseHelper;
 
 import java.util.ArrayList;
 
-public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDialogListener {
+public class ProfileActivity extends HomeActivity implements NameDialog.NameDialogListener {
 
-    TextView usernameText;
+    TextView usernameText, dailyMood;
     ImageView profileImage;
     ArrayList<goals_model> goalModels = new ArrayList<>();
-    Button addGoal;
+    Button addGoal, moodHistory;
     RecyclerView goal_recycler;
     goal_RecyclerViewAdaptor goalAdaptor;
-    GoalDialog goalDialog;
+    NameDialog nameDialog;
     ConfirmDialog confirmDialog;
+
+    MoodDialog moodDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +45,7 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
         setupBottomNavigation(); // Setup NavBar
 
         usernameText = (TextView) findViewById(R.id.username_text);
+        dailyMood = (TextView) findViewById(R.id.daily_Mood);
         System.out.println("usernameText: " + usernameText);
         //String username = getIntent().getStringExtra("KeyName");
 
@@ -60,11 +59,21 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         String username = sharedPreferences.getString("Username", "User");
+        String mood = sharedPreferences.getString("DailyMood", "Did Not Check in Yet");
         String ImageUri = dbHelper.getImage(username);
         Log.d("TAG", "Retrieved string: " + ImageUri);
         usernameText.setText(username);
+        dailyMood.setText("Today's Mood: " + mood);
         Uri image = Uri.parse(ImageUri);
         profileImage.setImageURI(image);
+
+        moodHistory = (Button) findViewById(R.id.mood_history_Button);
+        moodHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHistory();
+            }
+        });
 
         goalModels.add(new goals_model("Test Goal", "Ongoing"));
         goalModels.add(new goals_model("Test Goal2", "Completed"));
@@ -77,7 +86,8 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
         addGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddGoal("New Goal" , 100);
+
+                //AddGoal("New Goal" , 100);
             }
         });
 
@@ -97,6 +107,7 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
                             return true;
                         } else if (item.getItemId() == R.id.change_username) {
                             // Handle change username action
+                            changeName();
                             return true;
                         } else if (item.getItemId() == R.id.logout) {
                             // Handle logout action
@@ -117,10 +128,10 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
         });
     }
 
-    private void AddGoal(String goalTitle, int GoalValue){
+    private void changeName(){
 
-        goalDialog = new GoalDialog();
-        goalDialog.show(getSupportFragmentManager(), "Enter Goal");
+        nameDialog = new NameDialog();
+        nameDialog.show(getSupportFragmentManager(), "Enter new name");
     }
 
     private void confirmation(){
@@ -129,12 +140,20 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
     }
 
     @Override
-    public void applyTexts(String GoalTitle) {
+    public void applyTexts(String NewName) {
 
-        goalModels.add(new goals_model(GoalTitle, "Ongoing"));
+        /*goalModels.add(new goals_model(GoalTitle, "Ongoing"));
         goalAdaptor = new goal_RecyclerViewAdaptor(this , goalModels);
         goal_recycler.setAdapter(goalAdaptor);
-        goal_recycler.setLayoutManager(new LinearLayoutManager(this));
+        goal_recycler.setLayoutManager(new LinearLayoutManager(this)); */
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        String username = sharedPreferences.getString("Username", "User");
+        dbHelper.updateUserName(username, NewName);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Username", NewName);
+        editor.apply();
+        usernameText.setText(NewName);
     }
 
 
@@ -157,6 +176,11 @@ public class ProfileActivity extends HomeActivity implements GoalDialog.GoalDial
             Log.d("TAG", "Retrieved string: " + strURI);
             profileImage.setImageURI(selectedImage);
         }
+    }
+
+    private void viewHistory(){
+        Intent intent = new Intent(ProfileActivity.this, View_MoodHistory.class);
+        startActivity(intent);
     }
 
 }

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,10 +15,10 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.mobdeve.s16.mindpal.R;
 
-public class GoalDialog extends AppCompatDialogFragment {
+public class NameDialog extends AppCompatDialogFragment {
 
-    private EditText inputGoal;
-    private GoalDialogListener listener;
+    private EditText inputName;
+    private NameDialogListener listener;
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -27,10 +26,10 @@ public class GoalDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.goal_popup_profile, null);
+        View view = inflater.inflate(R.layout.change_name_profile, null);
 
         builder.setView(view)
-                .setTitle("Create Goal")
+                .setTitle("Change Username")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -40,12 +39,12 @@ public class GoalDialog extends AppCompatDialogFragment {
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String GoalTitle = inputGoal.getText().toString();
+                        String GoalTitle = inputName.getText().toString();
                         listener.applyTexts(GoalTitle);
 
                         new AlertDialog.Builder(getContext())
                                 .setTitle("Congratulations!")
-                                .setMessage("Goal set successfully! Let's go through this exciting journey!")
+                                .setMessage("Username Changed Successfully!")
                                 .setPositiveButton("OK", null)
                                 .show();
 
@@ -53,7 +52,7 @@ public class GoalDialog extends AppCompatDialogFragment {
                         //Toast.makeText(getContext(), "Goal set successfully!", Toast.LENGTH_SHORT).show();
                     }
                 });
-        inputGoal = view.findViewById(R.id.input_goal_title);
+        inputName = view.findViewById(R.id.input_new_name);
         return builder.create();
 
     }
@@ -62,10 +61,11 @@ public class GoalDialog extends AppCompatDialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
-        listener = (GoalDialogListener) context;
+        listener = (NameDialogListener) context;
     }
 
-    public interface GoalDialogListener {
-        void applyTexts(String GoalTitle);
+    public interface NameDialogListener {
+        void applyTexts(String NewName);
     }
+
 }
