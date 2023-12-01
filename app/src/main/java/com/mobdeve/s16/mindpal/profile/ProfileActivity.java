@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class ProfileActivity extends HomeActivity implements NameDialog.NameDialogListener {
 
-    TextView usernameText;
+    TextView usernameText, dailyMood;
     ImageView profileImage;
     ArrayList<goals_model> goalModels = new ArrayList<>();
     Button addGoal, moodHistory;
@@ -45,6 +45,7 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
         setupBottomNavigation(); // Setup NavBar
 
         usernameText = (TextView) findViewById(R.id.username_text);
+        dailyMood = (TextView) findViewById(R.id.daily_Mood);
         System.out.println("usernameText: " + usernameText);
         //String username = getIntent().getStringExtra("KeyName");
 
@@ -58,9 +59,11 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         String username = sharedPreferences.getString("Username", "User");
+        String mood = sharedPreferences.getString("DailyMood", "Did Not Check in Yet");
         String ImageUri = dbHelper.getImage(username);
         Log.d("TAG", "Retrieved string: " + ImageUri);
         usernameText.setText(username);
+        dailyMood.setText("Today's Mood: " + mood);
         Uri image = Uri.parse(ImageUri);
         profileImage.setImageURI(image);
 

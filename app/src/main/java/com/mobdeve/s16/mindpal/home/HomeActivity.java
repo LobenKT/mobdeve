@@ -96,6 +96,11 @@ public class HomeActivity extends NavigationActivity {
             checkIn_btn.setEnabled(false);
             String mood = dbhelper.getMood(username, formattedDate);
             dailyMood.setText("Today's Mood: " + mood);
+
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("DailyMood", mood);
+            editor.apply();
         }
     }
     private class FetchQuoteTask extends AsyncTask<Void, Void, String> {
