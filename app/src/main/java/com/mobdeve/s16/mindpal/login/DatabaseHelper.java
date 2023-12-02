@@ -8,23 +8,33 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.mobdeve.s16.mindpal.profile.Mood_Model;
+import com.mobdeve.s16.mindpal.profile.goals_model;
 
 import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDatabase";
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 12;
+    // Tables
     private static final String TABLE_USERS = "users";
     private static final String TABLE_MOOD = "mood";
+    private static final String TABLE_GOALS = "goals";
+    //Mood Table Content
     private static final String MOOD_USERNAME = "mood_username";
     private static final String MOOD_ID = "mood_id";
     public static final String MOOD_CONTENT = "mood_content";
     public static final String MOOD_Date = "mood_date";
+    //Users Table Content
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
     private static final String COLUMN_IMAGE = "image";
+    // Goals Table
+    private static final String GOAL_ID = "goal_id";
+    private static final String GOAL_USER = "goal_user";
+    private static final String GOAL_CONTENT = "goal_content";
+    private static final String GOAL_STATUS = "goal_status";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -52,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOOD);
             String CREATE_MOOD_TABLE = "CREATE TABLE " + TABLE_MOOD + "("
                     + MOOD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + MOOD_USERNAME + "TEXT,"
+                    + MOOD_USERNAME + " TEXT,"
                     + MOOD_CONTENT + " TEXT,"
                     + MOOD_Date + " TEXT" + ")";
 
@@ -60,6 +70,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         if (oldVersion < 10){
             db.execSQL("ALTER TABLE " + TABLE_MOOD + " ADD COLUMN " + MOOD_USERNAME + " TEXT");
+        }
+        if (oldVersion < 12){
+            String CREATE_GOAL_TABLE = "CREATE TABLE " + TABLE_GOALS + "("
+                    + GOAL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + GOAL_USER + " TEXT,"
+                    + GOAL_CONTENT + " TEXT,"
+                    + GOAL_STATUS + " TEXT" + ")";
+            db.execSQL(CREATE_GOAL_TABLE);
         }
     }
 
@@ -81,6 +99,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put (MOOD_Date, date);
         db.insert(TABLE_MOOD, null, values);
         Log.d("TAG", "Successfully Added Mood: " + username + content + date);
+        db.close();
+    }
+
+    public void addGoal (String username, String content){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(GOAL_USER, username);
+        values.put(GOAL_CONTENT, content);
+        values.put(GOAL_STATUS, "Ongoing");
+        db.insert(TABLE_GOALS, null, values);
+        Log.d("TAG", "Successfully Added Goal: " + username + content);
         db.close();
     }
 
@@ -132,6 +161,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()){
             list.add(new Mood_Model(cursor.getString(0), cursor.getString(1) ));
             Log.d("TAG", "Retrieved string: from Cursor " + cursor.getString(0));
+        }
+        return list;
+    }
+    public ArrayList<goals_model> getGoals (String username){
+        ArrayList <goals_model> list = new ArrayList<>();
+        String[] columns = new String[] {GOAL_ID, GOAL_CONTENT, GOAL_STATUS};
+        String selection = GOAL_USER + " = ?";
+        String[] selectionArgs = {username};
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_GOALS, columns, selection, selectionArgs, null, null, null);
+        while (cursor.moveToNext()){
+            list.add(new goals_model(cursor.getInt(0), cursor.getString(1), cursor.getString(2) ));
+            Log.d("TAG", "Retrieved string: from Cursor " + cursor.getInt(0) + cursor.getString(1) +cursor.getString(2));
         }
         return list;
     }

@@ -35,7 +35,7 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
     NameDialog nameDialog;
     ConfirmDialog confirmDialog;
 
-    MoodDialog moodDialog;
+    GoalDialog goalDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,19 +75,16 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
             }
         });
 
-        goalModels.add(new goals_model("Test Goal", "Ongoing"));
-        goalModels.add(new goals_model("Test Goal2", "Completed"));
-        goalModels.add(new goals_model("Test Goal3", "Ongoing"));
-
-        goalAdaptor = new goal_RecyclerViewAdaptor(this , goalModels);
+        goalModels = dbHelper.getGoals(username);
+        goalAdaptor = new goal_RecyclerViewAdaptor(ProfileActivity.this , goalModels);
         goal_recycler.setAdapter(goalAdaptor);
-        goal_recycler.setLayoutManager(new LinearLayoutManager(this));
+        goal_recycler.setLayoutManager(new LinearLayoutManager(ProfileActivity.this));
 
         addGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addGoal(username);
 
-                //AddGoal("New Goal" , 100);
             }
         });
 
@@ -132,6 +129,17 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
 
         nameDialog = new NameDialog();
         nameDialog.show(getSupportFragmentManager(), "Enter new name");
+    }
+
+    private void addGoal(String username){
+        goalDialog = new GoalDialog();
+        goalDialog.show(getSupportFragmentManager(), "Enter Goal");
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        goalModels = dbHelper.getGoals(username);
+        goalAdaptor = new goal_RecyclerViewAdaptor(ProfileActivity.this , goalModels);
+        goal_recycler.setAdapter(goalAdaptor);
+        goal_recycler.setLayoutManager(new LinearLayoutManager(ProfileActivity.this));
     }
 
     private void confirmation(){
