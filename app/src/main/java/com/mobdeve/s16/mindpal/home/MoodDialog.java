@@ -33,7 +33,7 @@ public class MoodDialog  extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.checkin_mood_home, null);
         inputMood = view.findViewById(R.id.Input_Mood);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPrefs", Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("Username", "User");
+        int userID = sharedPreferences.getInt("ID", 0);
         builder.setView(view)
                 .setTitle("Mood Check in")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -52,7 +52,7 @@ public class MoodDialog  extends AppCompatDialogFragment {
                         String formattedDate = dateFormat.format(Today);
                         // Place Mood on MoodTable
                         DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
-                        dbHelper.addMood(username, Mood, formattedDate);
+                        dbHelper.addMood(userID, Mood, formattedDate);
 
                         new AlertDialog.Builder(getContext())
                                 .setTitle("Congratulations!")

@@ -40,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
                 String password = Password.getText().toString(); // Get password from EditText
 
                 DatabaseHelper db = new DatabaseHelper(MainActivity.this);
-
-                if (db.checkUser(username, password)) {
+                if (db.checkUser(username,password)) {
                     Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                    openHomeActivity();
+                    int id = db.getUserID(username, password);
+                    openHomeActivity(id);
                 } else {
                     Toast.makeText(MainActivity.this, "Login failed. Invalid username or password.", Toast.LENGTH_SHORT).show();
                 }
@@ -59,14 +59,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void openHomeActivity(){
+    public void openHomeActivity(int id){
         String username = UserName.getText().toString();
 
         // Save username to SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("Username", username);
+        editor.putInt("ID", id);
         editor.apply();
+        Toast.makeText(MainActivity.this, "Login successful! for ID= " + id, Toast.LENGTH_SHORT).show();
 
         // Start HomeActivity
         Intent intent = new Intent(this, HomeActivity.class);

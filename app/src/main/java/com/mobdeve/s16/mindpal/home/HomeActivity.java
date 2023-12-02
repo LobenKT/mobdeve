@@ -60,6 +60,7 @@ public class HomeActivity extends NavigationActivity {
         WelcomeText = findViewById(R.id.Welcome_Message);
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
         String username = sharedPreferences.getString("Username", "User");
+        int userID = sharedPreferences.getInt("ID",0);
         WelcomeText.setText("Welcome, " + username);
 
         TextView inspiringQuote = findViewById(R.id.inspiringQuote);
@@ -67,7 +68,7 @@ public class HomeActivity extends NavigationActivity {
 
         dailyMood = (TextView) findViewById(R.id.daily_Mood);
         checkIn_btn = (Button) findViewById(R.id.mood_history_Button);
-        checkIN_Status(username);
+        checkIN_Status(userID);
         checkIn_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,15 +87,15 @@ public class HomeActivity extends NavigationActivity {
         moodDialog.show(getSupportFragmentManager(), "Add Mood");
     }
 
-    private void checkIN_Status(String username){
+    private void checkIN_Status(int userID){
         DatabaseHelper dbhelper = new DatabaseHelper(HomeActivity.this);
         Calendar calendar = Calendar.getInstance();
         Date Today = calendar.getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         String formattedDate = dateFormat.format(Today);
-        if (dbhelper.checkedIn(username, formattedDate)){
+        if (dbhelper.checkedIn(userID, formattedDate)){
             checkIn_btn.setEnabled(false);
-            String mood = dbhelper.getMood(username, formattedDate);
+            String mood = dbhelper.getMood(userID, formattedDate);
             dailyMood.setText("Today's Mood: " + mood);
 
             SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);

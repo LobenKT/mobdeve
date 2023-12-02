@@ -31,6 +31,7 @@ public class GoalDialog extends AppCompatDialogFragment {
         inputGoal = (EditText) view.findViewById(R.id.input_goal);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPrefs", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("Username", "User");
+        int userID = sharedPreferences.getInt("ID", 0);
         builder.setView(view)
                 .setTitle("Change Username")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -44,7 +45,7 @@ public class GoalDialog extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         DatabaseHelper dbhelper = new DatabaseHelper(getActivity());
                         String goal = inputGoal.getText().toString();
-                        dbhelper.addGoal(username, goal);
+                        dbhelper.addGoal(userID, goal);
 
                         new AlertDialog.Builder(getContext())
                                 .setTitle("Congratulations!")

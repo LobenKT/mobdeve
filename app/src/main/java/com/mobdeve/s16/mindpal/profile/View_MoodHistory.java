@@ -29,9 +29,9 @@ public class View_MoodHistory extends AppCompatActivity {
         mood_recycler = (RecyclerView) findViewById(R.id.mood_recycler);
 
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
-        String username = sharedPreferences.getString("Username", "User");
+        int userID = sharedPreferences.getInt("ID", 0);
         dbHelper = new DatabaseHelper(this);
-        ArrayList<Mood_Model> moodModels = dbHelper.getMood_History(username);
+        ArrayList<Mood_Model> moodModels = dbHelper.getMood_History(userID);
         moodAdaptor = new Mood_RecyclerAdaptor(this, moodModels);
         mood_recycler.setAdapter(moodAdaptor);
         mood_recycler.setLayoutManager(new LinearLayoutManager(this));
