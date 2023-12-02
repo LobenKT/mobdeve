@@ -15,13 +15,13 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDatabase";
-    private static final int DATABASE_VERSION = 12;
+    private static final int DATABASE_VERSION = 13;
     // Tables
     private static final String TABLE_USERS = "users";
     private static final String TABLE_MOOD = "mood";
     private static final String TABLE_GOALS = "goals";
     //Mood Table Content
-    private static final String MOOD_USERNAME = "mood_username";
+    private static final String MOOD_USER = "mood_user";
     private static final String MOOD_ID = "mood_id";
     public static final String MOOD_CONTENT = "mood_content";
     public static final String MOOD_Date = "mood_date";
@@ -58,23 +58,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             db.execSQL("ALTER TABLE " + TABLE_USERS + " ADD COLUMN " + COLUMN_IMAGE + " TEXT");
         }
-        if (oldVersion < 9) {
-            //db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOOD);
+
+        if (oldVersion < 13){
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOOD);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_GOALS);
             String CREATE_MOOD_TABLE = "CREATE TABLE " + TABLE_MOOD + "("
                     + MOOD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + MOOD_USERNAME + " TEXT,"
+                    + MOOD_USER + " INTEGER,"
                     + MOOD_CONTENT + " TEXT,"
                     + MOOD_Date + " TEXT" + ")";
 
             db.execSQL(CREATE_MOOD_TABLE);
-        }
-        if (oldVersion < 10){
-            db.execSQL("ALTER TABLE " + TABLE_MOOD + " ADD COLUMN " + MOOD_USERNAME + " TEXT");
-        }
-        if (oldVersion < 12){
+
             String CREATE_GOAL_TABLE = "CREATE TABLE " + TABLE_GOALS + "("
                     + GOAL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + GOAL_USER + " TEXT,"
+                    + GOAL_USER + " INTEGER,"
                     + GOAL_CONTENT + " TEXT,"
                     + GOAL_STATUS + " TEXT" + ")";
             db.execSQL(CREATE_GOAL_TABLE);
@@ -91,33 +89,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addMood (String username, String content, String date){
+    public void addMood (int userID, String content, String date){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MOOD_USERNAME, username);
+        values.put(MOOD_USER, userID);
         values.put(MOOD_CONTENT, content);
         values.put (MOOD_Date, date);
         db.insert(TABLE_MOOD, null, values);
-        Log.d("TAG", "Successfully Added Mood: " + username + content + date);
+        Log.d("TAG", "Successfully Added Mood: " + userID + content + date);
         db.close();
     }
 
-    public void addGoal (String username, String content){
+    public void addGoal (int userID, String content){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(GOAL_USER, username);
+        values.put(GOAL_USER, userID);
         values.put(GOAL_CONTENT, content);
         values.put(GOAL_STATUS, "Ongoing");
         db.insert(TABLE_GOALS, null, values);
-        Log.d("TAG", "Successfully Added Goal: " + username + content);
+        Log.d("TAG", "Successfully Added Goal: " + userID + content);
         db.close();
     }
 
-    public boolean checkedIn (String username, String date){
+    public boolean checkedIn (int userID, String date){
         SQLiteDatabase db = this.getReadableDatabase();
+        String id = String.valueOf(userID);
         Cursor cursor = db.query(TABLE_MOOD, new String[]{MOOD_ID},
-                MOOD_USERNAME + "=? AND " + MOOD_Date + "=?",
-                new String[]{username, date}, null, null, null);
+                MOOD_USER + "=? AND " + MOOD_Date + "=?",
+                new String[]{id, date}, null, null, null);
 
         int cursorCount = cursor.getCount();
         cursor.close();
@@ -138,10 +137,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return cursorCount > 0;
     }
-    public String getMood (String username, String date){
+    public int getUserID (String username, String password){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] Columns ={COLUMN_ID};
+        String selection = COLUMN_USERNAME + " =? AND " + COLUMN_PASSWORD + "=?";
+        String[] args = {username, password};
+        Cursor cursor = db.query(TABLE_USERS, Columns, selection, args, null, null, null);
+        cursor.moveToFirst();
+        return cursor.getInt(0);
+
+    }
+    public String getMood (int userID, String date){
         String mood = "";
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT " + MOOD_CONTENT + " FROM " + TABLE_MOOD + " WHERE " + MOOD_USERNAME + " = " + "'"+username+"' AND " + MOOD_Date + " = " + "'"+date+"'";
+        String query = "SELECT " + MOOD_CONTENT + " FROM " + TABLE_MOOD + " WHERE " + MOOD_USER + " = " + userID +" AND " + MOOD_Date + " = " + "'"+date+"'";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor !=null){
             cursor.moveToFirst();
@@ -151,11 +160,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return mood;
     }
 
-    public ArrayList<Mood_Model> getMood_History (String username){
+    public ArrayList<Mood_Model> getMood_History (int userID){
         ArrayList<Mood_Model> list = new ArrayList<>();
+        String id = String.valueOf(userID);
         String[] columns = new String[]{MOOD_CONTENT , MOOD_Date};
-        String selection = MOOD_USERNAME + " = ?";
-        String[] selectionArgs = {username};
+        String selection = MOOD_USER + " = ?";
+        String[] selectionArgs = {id};
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_MOOD, columns, selection, selectionArgs, null, null, null);
         while (cursor.moveToNext()){
@@ -164,11 +174,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return list;
     }
-    public ArrayList<goals_model> getGoals (String username){
+    public ArrayList<goals_model> getGoals (int userID){
         ArrayList <goals_model> list = new ArrayList<>();
+        String id = String.valueOf(userID);
         String[] columns = new String[] {GOAL_ID, GOAL_CONTENT, GOAL_STATUS};
         String selection = GOAL_USER + " = ?";
-        String[] selectionArgs = {username};
+        String[] selectionArgs = {id};
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_GOALS, columns, selection, selectionArgs, null, null, null);
         while (cursor.moveToNext()){
@@ -178,19 +189,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public void updateImage (String image, String name){
+    public void updateImage (String image, int userID){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_IMAGE, image);
-        db.update(TABLE_USERS, contentValues, COLUMN_USERNAME + " = " + "'"+name+"'", null);
+        db.update(TABLE_USERS, contentValues, COLUMN_ID + " = " + userID, null);
         Log.d("TAG", "Retrieved string: " + image);
     }
 
-    public void updateUserName (String name, String newName){
+    public void updateUserName (int userID, String newName){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values= new ContentValues();
         values.put(COLUMN_USERNAME, newName);
-        db.update(TABLE_USERS, values,COLUMN_USERNAME + " = " + "'"+name+"'", null );
+        db.update(TABLE_USERS, values,COLUMN_ID + " = " + userID, null );
     }
 
     public void updatedGoalStatus (int id, String status){
@@ -199,15 +210,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(GOAL_STATUS, status);
         db.update(TABLE_GOALS, values, GOAL_ID + " = " + id , null);
     }
-    public String getImage(String name){
+    public String getImage(int userID){
         String image = "";
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT " + COLUMN_IMAGE + " FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " = " + "'"+name+"'";
+        String query = "SELECT " + COLUMN_IMAGE + " FROM " + TABLE_USERS + " WHERE " + COLUMN_ID + " = " + userID;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor!=null){
             cursor.moveToFirst();
             image = cursor.getString(0);
-            Log.d("TAG", "Retrieved string: " + name);
         }
         return image;
     }

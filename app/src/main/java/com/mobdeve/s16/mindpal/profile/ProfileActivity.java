@@ -59,8 +59,9 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         String username = sharedPreferences.getString("Username", "User");
+        int userID = sharedPreferences.getInt("ID", 0);
         String mood = sharedPreferences.getString("DailyMood", "Did Not Check in Yet");
-        String ImageUri = dbHelper.getImage(username);
+        String ImageUri = dbHelper.getImage(userID);
         Log.d("TAG", "Retrieved string: " + ImageUri);
         usernameText.setText(username);
         dailyMood.setText("Today's Mood: " + mood);
@@ -75,7 +76,7 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
             }
         });
 
-        goalModels = dbHelper.getGoals(username);
+        goalModels = dbHelper.getGoals(userID);
         goalAdaptor = new goal_RecyclerViewAdaptor(ProfileActivity.this , goalModels);
         goal_recycler.setAdapter(goalAdaptor);
         goal_recycler.setLayoutManager(new LinearLayoutManager(ProfileActivity.this));
@@ -83,7 +84,7 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
         addGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addGoal(username);
+                addGoal(userID);
 
             }
         });
@@ -131,12 +132,12 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
         nameDialog.show(getSupportFragmentManager(), "Enter new name");
     }
 
-    private void addGoal(String username){
+    private void addGoal(int userID){
         goalDialog = new GoalDialog();
         goalDialog.show(getSupportFragmentManager(), "Enter Goal");
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        goalModels = dbHelper.getGoals(username);
+        goalModels = dbHelper.getGoals(userID);
         goalAdaptor = new goal_RecyclerViewAdaptor(ProfileActivity.this , goalModels);
         goal_recycler.setAdapter(goalAdaptor);
         goal_recycler.setLayoutManager(new LinearLayoutManager(ProfileActivity.this));
@@ -156,8 +157,8 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
         goal_recycler.setLayoutManager(new LinearLayoutManager(this)); */
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        String username = sharedPreferences.getString("Username", "User");
-        dbHelper.updateUserName(username, NewName);
+        int userID = sharedPreferences.getInt("ID", 0);
+        dbHelper.updateUserName(userID, NewName);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("Username", NewName);
         editor.apply();
@@ -178,9 +179,9 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
             Uri selectedImage = data.getData();
             SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
             String strURI = selectedImage.toString();
-            String username = sharedPreferences.getString("Username", "User");
+            int userID = sharedPreferences.getInt("ID", 0);
             DatabaseHelper dbHelper = new DatabaseHelper(ProfileActivity.this);
-            dbHelper.updateImage(strURI, username);
+            dbHelper.updateImage(strURI, userID);
             Log.d("TAG", "Retrieved string: " + strURI);
             profileImage.setImageURI(selectedImage);
         }
