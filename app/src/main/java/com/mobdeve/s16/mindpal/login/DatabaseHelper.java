@@ -192,6 +192,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_USERNAME, newName);
         db.update(TABLE_USERS, values,COLUMN_USERNAME + " = " + "'"+name+"'", null );
     }
+
+    public void updatedGoalStatus (int id, String status){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(GOAL_STATUS, status);
+        db.update(TABLE_GOALS, values, GOAL_ID + " = " + id , null);
+    }
     public String getImage(String name){
         String image = "";
         SQLiteDatabase db = getReadableDatabase();
