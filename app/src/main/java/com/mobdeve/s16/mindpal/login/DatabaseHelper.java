@@ -13,31 +13,38 @@ import com.mobdeve.s16.mindpal.profile.goals_model;
 
 import java.util.ArrayList;
 
+// DatabaseHelper manages the SQLite database for the MindPal app
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    // Database configuration constants
     private static final String DATABASE_NAME = "UserDatabase";
     private static final int DATABASE_VERSION = 17;
-    // Tables
+
+    // Table names
     private static final String TABLE_USERS = "users";
     private static final String TABLE_MOOD = "mood";
     private static final String TABLE_GOALS = "goals";
     private static final String TABLE_ALARMS = "alarms";
-    //Mood Table Content
+
+    // Mood table columns
     private static final String MOOD_USER = "mood_user";
     private static final String MOOD_ID = "mood_id";
     public static final String MOOD_CONTENT = "mood_content";
     public static final String MOOD_Date = "mood_date";
-    //Users Table Content
+
+    // Users table columns
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
     private static final String COLUMN_IMAGE = "image";
-    // Goals Table
+
+    // Goals table columns
     private static final String GOAL_ID = "goal_id";
     private static final String GOAL_USER = "goal_user";
     private static final String GOAL_CONTENT = "goal_content";
     private static final String GOAL_STATUS = "goal_status";
-    // Alarm Table Content
+
+    // Alarm table columns
     private static final String ALARM_ID = "alarm_ID";
     private static final String ALARM_USER = "alarm_user";
     private static final String ALARM_TIME = "alarm_time";
@@ -47,18 +54,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String ALARM_REPEAT = "alarm_repeat";
     private static final String ALARM_LABEL = "alarm_label";
 
+    // Constructor to initialize SQLiteOpenHelper
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // Called when the database is created for the first time
         onUpgrade(db, 0, DATABASE_VERSION);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // Handles database upgrade logic
         if (oldVersion < 1) {
+            // Create users table if upgrading from version 0
             String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_USERNAME + " TEXT,"
