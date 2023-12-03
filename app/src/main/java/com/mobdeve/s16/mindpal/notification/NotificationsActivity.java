@@ -59,14 +59,64 @@ public class NotificationsActivity extends NavigationActivity implements AddAlar
 
     }
 
-    public void startAlarm(Calendar c, int alarmID, String Label) {
+    public void startAlarm(Calendar c, int alarmID, String Label, String repeat, String days) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
         intent.putExtra("KeyLabel", Label);
         intent.putExtra("KeyID", alarmID);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, alarmID, intent, PendingIntent.FLAG_IMMUTABLE);
+        long repeatInterval;
+        if (repeat.equalsIgnoreCase("Daily")){
+            repeatInterval = AlarmManager.INTERVAL_DAY;
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), repeatInterval, pendingIntent);
+        }else if (repeat.equalsIgnoreCase("Weekly")){
+            repeatInterval = AlarmManager.INTERVAL_DAY * 7;
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), repeatInterval, pendingIntent);
+        }else if (repeat.equalsIgnoreCase("Once")) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        }else if (repeat.equalsIgnoreCase("Custom")){
+            String[] day = days.split(" ");
+            for (int i = 0; i < day.length; i++){
+                switch (day[i]){
+                    case "S":
+                        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                        repeatInterval = AlarmManager.INTERVAL_DAY * 7;
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), repeatInterval, pendingIntent);
+                        break;
+                    case "M":
+                        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                        repeatInterval = AlarmManager.INTERVAL_DAY * 7;
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), repeatInterval, pendingIntent);
+                        break;
+                    case "T":
+                        c.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
+                        repeatInterval = AlarmManager.INTERVAL_DAY * 7;
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), repeatInterval, pendingIntent);
+                        break;
+                    case "W":
+                        c.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+                        repeatInterval = AlarmManager.INTERVAL_DAY * 7;
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), repeatInterval, pendingIntent);
+                        break;
+                    case "Th":
+                        c.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+                        repeatInterval = AlarmManager.INTERVAL_DAY * 7;
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), repeatInterval, pendingIntent);
+                        break;
+                    case "F":
+                        c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+                        repeatInterval = AlarmManager.INTERVAL_DAY * 7;
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), repeatInterval, pendingIntent);
+                        break;
+                    case "Sat":
+                        c.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+                        repeatInterval = AlarmManager.INTERVAL_DAY * 7;
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), repeatInterval, pendingIntent);
+                        break;
+                }
+            }
+        }
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
     //Kulang pa to, cant target a specific alarm
@@ -79,7 +129,7 @@ public class NotificationsActivity extends NavigationActivity implements AddAlar
     }
 
     @Override
-    public void sendInput(String Label, int hours, int minutes) {
+    public void sendInput(String Label, String repeat, String days, int hours, int minutes) {
         Calendar c = Calendar.getInstance();
 
         //Set Up For Arraylist / add to alarms list
@@ -97,9 +147,17 @@ public class NotificationsActivity extends NavigationActivity implements AddAlar
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         String formattedDate = dateFormat.format(Today);
 
-        dbhelper.addAlarm(userID, Time, hours, minutes, formattedDate, "Daily", Label);
-        // Set the Alarm
-        int alarmID = dbhelper.getAlarmID(userID, hours, minutes, formattedDate, "Daily", Label);
+        // For Custom
+        int alarmID;
+        if (repeat.equalsIgnoreCase("Custom")){
+            dbhelper.addAlarm(userID, Time, hours, minutes, formattedDate, days, Label);
+            // Set the Alarm
+            alarmID = dbhelper.getAlarmID(userID, hours, minutes, formattedDate, days, Label);
+        }else{
+            dbhelper.addAlarm(userID, Time, hours, minutes, formattedDate, repeat, Label);
+            // Set the Alarm
+            alarmID = dbhelper.getAlarmID(userID, hours, minutes, formattedDate, repeat, Label);
+        }
         //alarms.add(new Alarm(alarmID, Time, hours, minutes, formattedDate, "Daily", Label));
         alarms = dbhelper.getAlarms(userID);
         c.set(Calendar.HOUR_OF_DAY, hours);
@@ -111,7 +169,7 @@ public class NotificationsActivity extends NavigationActivity implements AddAlar
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        startAlarm(c, alarmID, Label);
+        startAlarm(c, alarmID, Label, repeat, days);
     }
 
     public String FormatTimeString (int hours, int minutes){
