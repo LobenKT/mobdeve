@@ -285,11 +285,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return image;
     }
 
-// Delete Functions
+    // Delete Functions
     public void deleteAlarm(int alarmID){
         SQLiteDatabase db = getWritableDatabase();
         String query = "DELETE FROM " + TABLE_ALARMS + " WHERE " + ALARM_ID + " = " + alarmID;
         db.execSQL(query);
         db.close();
     }
+
+    // Inside DatabaseHelper.java
+
+    public void deleteUserData(int userID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Convert userID to String for the selection arguments
+        String userIdStr = String.valueOf(userID);
+        String[] selectionArgs = { userIdStr };
+
+        // Delete user data from the 'users' table
+        db.delete(TABLE_USERS, COLUMN_ID + " = ?", selectionArgs);
+
+        // Delete user data from the 'mood' table
+        db.delete(TABLE_MOOD, MOOD_USER + " = ?", selectionArgs);
+
+        // Delete user data from the 'goals' table
+        db.delete(TABLE_GOALS, GOAL_USER + " = ?", selectionArgs);
+
+        // Delete user data from the 'alarms' table
+        db.delete(TABLE_ALARMS, ALARM_USER + " = ?", selectionArgs);
+
+        // Log the deletion
+        Log.d("DatabaseHelper", "All data deleted for user ID: " + userID);
+
+        db.close();
+    }
+
 }
