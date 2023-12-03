@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.mobdeve.s16.mindpal.notification.Alarm;
 import com.mobdeve.s16.mindpal.profile.Mood_Model;
 import com.mobdeve.s16.mindpal.profile.goals_model;
 
@@ -15,11 +16,12 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDatabase";
-    private static final int DATABASE_VERSION = 13;
+    private static final int DATABASE_VERSION = 17;
     // Tables
     private static final String TABLE_USERS = "users";
     private static final String TABLE_MOOD = "mood";
     private static final String TABLE_GOALS = "goals";
+    private static final String TABLE_ALARMS = "alarms";
     //Mood Table Content
     private static final String MOOD_USER = "mood_user";
     private static final String MOOD_ID = "mood_id";
@@ -35,6 +37,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String GOAL_USER = "goal_user";
     private static final String GOAL_CONTENT = "goal_content";
     private static final String GOAL_STATUS = "goal_status";
+    // Alarm Table Content
+    private static final String ALARM_ID = "alarm_ID";
+    private static final String ALARM_USER = "alarm_user";
+    private static final String ALARM_TIME = "alarm_time";
+    private static final String ALARM_HOUR = "alarm_hour";
+    private static final String ALARM_MINUTE = "alarm_minute";
+    private static final String ALARM_DATE = "alarm_date";
+    private static final String ALARM_REPEAT = "alarm_repeat";
+    private static final String ALARM_LABEL = "alarm_label";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -77,6 +88,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + GOAL_STATUS + " TEXT" + ")";
             db.execSQL(CREATE_GOAL_TABLE);
         }
+        if (oldVersion < 17){
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALARMS);
+            String CREATE_ALARM_TABLE = "CREATE TABLE " + TABLE_ALARMS + "("
+                    + ALARM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + ALARM_USER + " INTEGER,"
+                    + ALARM_TIME + " TEXT,"
+                    + ALARM_HOUR + " INTEGER,"
+                    + ALARM_MINUTE + " INTEGER,"
+                    + ALARM_DATE + " TEXT,"
+                    + ALARM_REPEAT + " TEXT,"
+                    + ALARM_LABEL + " TEXT" + ")";
+            db.execSQL(CREATE_ALARM_TABLE);
+        }
     }
 
     public void addUser(String username, String password, String image) {
@@ -108,6 +132,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(GOAL_STATUS, "Ongoing");
         db.insert(TABLE_GOALS, null, values);
         Log.d("TAG", "Successfully Added Goal: " + userID + content);
+        db.close();
+    }
+    public void addAlarm (int userID, String Time, int hour, int minute, String AlarmDate, String repeat, String Label){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ALARM_USER, userID);
+        values.put(ALARM_TIME, Time);
+        values.put(ALARM_HOUR, hour);
+        values.put(ALARM_MINUTE, minute);
+        values.put(ALARM_DATE, AlarmDate);
+        values.put(ALARM_REPEAT, repeat);
+        values.put(ALARM_LABEL, Label);
+        db.insert(TABLE_ALARMS, null, values);
         db.close();
     }
 
@@ -159,6 +196,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return mood;
     }
+    public int getAlarmID (int userID, int hour, int minute, String date, String repeat, String label){
+        SQLiteDatabase db = getReadableDatabase();
+        String[] Columns = {ALARM_ID};
+        String userString = String.valueOf(userID);
+        String hourString = String.valueOf(hour);
+        String minuteString = String.valueOf(minute);
+        String selection = ALARM_USER + " = ? AND " + ALARM_HOUR + " = ? AND " + ALARM_MINUTE + " = ? AND " + ALARM_DATE + " = ? AND " + ALARM_REPEAT + " = ? AND " + ALARM_LABEL + " = ? ";
+        String[] args = {userString, hourString, minuteString, date, repeat, label};
+        Cursor cursor = db.query(TABLE_ALARMS, Columns, selection, args, null, null,null);
+        cursor.moveToFirst();
+        return cursor.getInt(0);
+    }
 
     public ArrayList<Mood_Model> getMood_History (int userID){
         ArrayList<Mood_Model> list = new ArrayList<>();
@@ -185,6 +234,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()){
             list.add(new goals_model(cursor.getInt(0), cursor.getString(1), cursor.getString(2) ));
             Log.d("TAG", "Retrieved string: from Cursor " + cursor.getInt(0) + cursor.getString(1) +cursor.getString(2));
+        }
+        return list;
+    }
+    public ArrayList<Alarm> getAlarms (int userID){
+        ArrayList <Alarm> list = new ArrayList<>();
+        String id = String.valueOf(userID);
+        String[] columns = new String[] {ALARM_ID, ALARM_TIME, ALARM_HOUR, ALARM_MINUTE, ALARM_DATE, ALARM_REPEAT, ALARM_LABEL};
+        String selection = ALARM_USER + " = ?";
+        String[] selectionArgs = {id};
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_ALARMS, columns, selection, selectionArgs, null, null, null );
+        while (cursor.moveToNext()){
+            list.add(new Alarm(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3),
+                    cursor.getString(4), cursor.getString(5), cursor.getString(6)));
         }
         return list;
     }
@@ -220,5 +283,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             image = cursor.getString(0);
         }
         return image;
+    }
+
+// Delete Functions
+    public void deleteAlarm(int alarmID){
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_ALARMS + " WHERE " + ALARM_ID + " = " + alarmID;
+        db.execSQL(query);
+        db.close();
     }
 }
