@@ -1,10 +1,12 @@
 package com.mobdeve.s16.mindpal.profile;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -21,6 +23,7 @@ import com.mobdeve.s16.mindpal.R;
 import com.mobdeve.s16.mindpal.home.HomeActivity;
 import com.mobdeve.s16.mindpal.home.MoodDialog;
 import com.mobdeve.s16.mindpal.login.DatabaseHelper;
+import com.mobdeve.s16.mindpal.login.MainActivity;
 
 import java.util.ArrayList;
 
@@ -113,7 +116,7 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
                             return true;
                         } else if (item.getItemId() == R.id.delete) {
                             // Handle delete action
-                            confirmation();
+                            confirmDeletion();
                             return true;
                         } else {
                             return false;
@@ -190,6 +193,45 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
     private void viewHistory(){
         Intent intent = new Intent(ProfileActivity.this, View_MoodHistory.class);
         startActivity(intent);
+    }
+
+    // Method to confirm deletion with the user in ProfileActivity
+
+    private void confirmDeletion() {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Profile")
+                .setMessage("Are you sure you want to delete your profile?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteProfile();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                // .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void deleteProfile() {
+        // Fetch user ID from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPrefs", MODE_PRIVATE);
+        int userID = sharedPreferences.getInt("ID", 0);
+
+        // Use DatabaseHelper to delete user data
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        dbHelper.deleteUserData(userID);
+
+        // Clear shared preferences
+        sharedPreferences.edit().clear().apply();
+
+        // Log the deletion
+        Log.d("ProfileActivity", "User profile deleted for user ID: " + userID);
+
+        // Redirect to login screen or another appropriate action
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
+        // Close the current activity
+        finish();
     }
 
 }
