@@ -31,12 +31,14 @@ public class AddAlarmDialogFragment extends DialogFragment {
     private Spinner repeatSpinner;
     private EditText labelEditText;
     private LinearLayout daysLayout;
+    private String repeat;
     private Button addAlarmButton;
     private CheckBox[] dayCheckboxes;
+
     private final String[] dayLabels = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     private final int[] checkboxIds = {R.id.sunCheckbox, R.id.monCheckbox, R.id.tueCheckbox, R.id.wedCheckbox, R.id.thuCheckbox, R.id.friCheckbox, R.id.satCheckbox};
     public interface OnInputListener {
-        void sendInput(String Label, int hours, int minutes);
+        void sendInput(String Label, String repeat,  int hours, int minutes);
     }
     public OnInputListener inputListener;
 
@@ -66,9 +68,11 @@ public class AddAlarmDialogFragment extends DialogFragment {
         repeatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 if ("Custom".equals(parent.getItemAtPosition(position))) {
                     daysLayout.setVisibility(View.VISIBLE);
                 } else {
+                    repeat = parent.getItemAtPosition(position).toString();
                     daysLayout.setVisibility(View.GONE);
                 }
             }
@@ -85,7 +89,7 @@ public class AddAlarmDialogFragment extends DialogFragment {
             String Label = labelEditText.getText().toString();
             int hours = timePicker.getHour();
             int minutes = timePicker.getMinute();
-            inputListener.sendInput(Label,hours, minutes);
+            inputListener.sendInput(Label, repeat,hours, minutes);
             Toast.makeText(getActivity(), "Alarm Added", Toast.LENGTH_LONG).show();
             dismiss();
         });
