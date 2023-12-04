@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("Username", username);
         editor.putInt("ID", id);
         editor.apply();
-        Toast.makeText(MainActivity.this, "Login successful! for ID= " + id, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, "Login successful! for ID= " + id, Toast.LENGTH_SHORT).show();
 
         // Start HomeActivity
         Intent intent = new Intent(this, HomeActivity.class);

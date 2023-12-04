@@ -28,7 +28,7 @@ public class MeditateActivity extends NavigationActivity {
     RecyclerView meditation_recycler;
     meditation_Adaptor meditationAdaptor;
     Button sleep_btn , focus_btn, relax_btn, happy_btn, reset_btn;
-    String API = "AIzaSyDT3u9rFL-G4cQx_HHnzd_qDPc-2CA7XOo";
+    String API = "AIzaSyDsLJA942LpQgKjT18qsUyY5R1mc-qLOCU";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
