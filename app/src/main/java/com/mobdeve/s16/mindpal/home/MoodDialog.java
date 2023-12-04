@@ -56,7 +56,7 @@ public class MoodDialog  extends AppCompatDialogFragment {
 
                         new AlertDialog.Builder(getContext())
                                 .setTitle("Congratulations!")
-                                .setMessage("Username Changed Successfully!")
+                                .setMessage("Mood has been logged")
                                 .setPositiveButton("OK", null)
                                 .show();
 

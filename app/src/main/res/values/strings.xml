@@ -18,8 +18,8 @@
     <string name="fri">Fri</string>
     <string name="sat">Sat</string>
     <string name="sun">Sun</string>
-    <string name="quote">I am an inspiring quote</string>
+    <string name="quote">"I am an inspiring quote"</string>
     <string name="moodtoday">Today\'s Mood</string>
-    <string name="checkin"Mood Check In></string>
+    <string name="checkin">Mood Check In></string>
 
 </resources>

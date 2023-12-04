@@ -2,10 +2,12 @@ package com.mobdeve.s16.mindpal.home;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,6 +47,8 @@ public class HomeActivity extends NavigationActivity {
     RecyclerView feature_recycler;
     featured_RecyclerAdaptor featureAdaptor;
     MoodDialog moodDialog;
+    ProgressBar progressBar;
+
 
 
     @Override
@@ -80,6 +84,7 @@ public class HomeActivity extends NavigationActivity {
         feature_recycler.setAdapter(featureAdaptor);
         feature_recycler.setLayoutManager(new LinearLayoutManager(this));
 
+        progressBar = findViewById(R.id.progressBar);
         loadArticles();
     }
     private void AddMood(){
@@ -104,6 +109,7 @@ public class HomeActivity extends NavigationActivity {
             editor.apply();
         }
     }
+
     private class FetchQuoteTask extends AsyncTask<Void, Void, String> {
         private TextView textView;
 
@@ -131,7 +137,9 @@ public class HomeActivity extends NavigationActivity {
                 JSONArray jsonArray = new JSONArray(response.toString());
                 if (jsonArray.length() > 0) {
                     JSONObject firstQuote = jsonArray.getJSONObject(0);
-                    return firstQuote.getString("quote");
+                    String quote = firstQuote.getString("quote");
+                    String author = firstQuote.optString("author", "Unknown"); // Assuming there is an author field
+                    return "\"" + quote + "\" - " + author; // Format the string with quote and author
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -140,17 +148,19 @@ public class HomeActivity extends NavigationActivity {
             return null;
         }
 
-
         @Override
-        protected void onPostExecute(String quote) {
-            if (quote != null && textView != null) {
-                textView.setText(quote);
+        protected void onPostExecute(String formattedQuote) {
+            if (formattedQuote != null && textView != null) {
+                textView.setText(formattedQuote);
+                // Check if the API level is 26 or higher
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    textView.setTooltipText("This is a randomly generated quote"); // Set tooltip for API 26 and above
+                }
             } else {
-                Log.e("FetchQuoteTask", "Quote is null");
+                Log.e("FetchQuoteTask", "Formatted quote is null");
             }
         }
     }
-
 
 
     private void loadArticles() {
@@ -160,11 +170,13 @@ public class HomeActivity extends NavigationActivity {
                 .build();
 
         NewsApiService apiService = retrofit.create(NewsApiService.class);
-        Call<NewsResponse> call = apiService.getArticles("meditation+mental health", "f01f2647f6ad40a58c706ed48ddde3c0");
+        Call<NewsResponse> call = apiService.getArticles("meditation+mental health+life", "f01f2647f6ad40a58c706ed48ddde3c0");
 
         call.enqueue(new Callback<NewsResponse>() {
             @Override
             public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
+                // Hide the ProgressBar
+                progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     List<Article> articles = response.body().getArticles();
                     featuredModels.clear(); // Clear existing data
@@ -187,6 +199,7 @@ public class HomeActivity extends NavigationActivity {
 
             @Override
             public void onFailure(Call<NewsResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 Snackbar.make(findViewById(android.R.id.content), "Error loading articles. Try again.", Snackbar.LENGTH_LONG)
                         .setAction("RETRY", new View.OnClickListener() {
                             @Override
