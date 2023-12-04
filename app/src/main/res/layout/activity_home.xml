@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cardView"
                 android:layout_marginTop="20dp"
-                android:text="Mood Check In"
+                android:text="@string/checkin"
                 />
 
             <TextView
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="Featured Content"
+                android:text="@string/featured"
                 android:textColor="#738c89"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -94,7 +94,11 @@
                 android:textColor="#738c89"
                 android:tooltipText="Quote details"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:scrollbars="vertical"
+                android:maxLines="4"
+                android:ellipsize="end"
+                />
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
