@@ -33,7 +33,7 @@ public class GoalDialog extends AppCompatDialogFragment {
         String username = sharedPreferences.getString("Username", "User");
         int userID = sharedPreferences.getInt("ID", 0);
         builder.setView(view)
-                .setTitle("Change Username")
+                .setTitle("Add A Goal")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

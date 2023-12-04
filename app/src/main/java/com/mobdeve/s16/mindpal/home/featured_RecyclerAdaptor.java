@@ -44,6 +44,11 @@ public class featured_RecyclerAdaptor extends RecyclerView.Adapter<featured_Recy
         featured_model model = featuredModels.get(position);
         holder.FeatureTitle.setText(model.getFeatured_Title());
         holder.FeatureDescription.setText(model.getFeatured_Description());
+
+        // Truncate long text
+        truncateText(holder.FeatureTitle, 25); // Truncate title if it's too long
+        truncateText(holder.FeatureDescription, 50); // Truncate description if it's too long
+
         Picasso.get().load(model.getFeatured_thumbnail()).into(holder.FeatureThumbnail);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +60,13 @@ public class featured_RecyclerAdaptor extends RecyclerView.Adapter<featured_Recy
                 context.startActivity(i);
             }
         });
+    }
+
+    private void truncateText(TextView textView, int maxLength) {
+        if (textView.getText().length() > maxLength) {
+            String truncatedText = textView.getText().toString().substring(0, maxLength) + "...";
+            textView.setText(truncatedText);
+        }
     }
 
     /*
