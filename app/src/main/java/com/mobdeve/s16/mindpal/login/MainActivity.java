@@ -21,12 +21,15 @@ public class MainActivity extends AppCompatActivity {
 
     EditText Password;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_login);
 
         LogInButton = (Button)findViewById(R.id.login_button);
+        LogInButton.setBackgroundResource(R.drawable.rounded_button);
         SignUpButton = (Button)findViewById(R.id.signup_button);
         UserName = (EditText) findViewById(R.id.editTextUsername);
         Password = (EditText) findViewById(R.id.editTextPassword);
