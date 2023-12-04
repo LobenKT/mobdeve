@@ -2,6 +2,7 @@ package com.mobdeve.s16.mindpal.profile;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,7 +49,9 @@ public class goal_RecyclerViewAdaptor extends RecyclerView.Adapter<goal_Recycler
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                confirmDeletion(id);
+
+                confirmDeletion(id,position);
+
             }
         });
         holder.statusBtn.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +108,7 @@ public class goal_RecyclerViewAdaptor extends RecyclerView.Adapter<goal_Recycler
         }
     }
 
-    private void confirmDeletion(int goalID) {
+    private void confirmDeletion(int goalID, int position) {
         new AlertDialog.Builder(context)
                 .setTitle("Delete Goal")
                 .setMessage("Are you sure you want to delete this Goal?")
@@ -113,6 +116,10 @@ public class goal_RecyclerViewAdaptor extends RecyclerView.Adapter<goal_Recycler
                     public void onClick(DialogInterface dialog, int which) {
                         DatabaseHelper dbHelper = new DatabaseHelper(context);
                         dbHelper.deleteGoal(goalID);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, goalModels.size());
+                        Intent intent = new Intent(context, ProfileActivity.class);
+                        context.startActivity(intent);
                     }
                 })
                 .setNegativeButton(android.R.string.no, null)

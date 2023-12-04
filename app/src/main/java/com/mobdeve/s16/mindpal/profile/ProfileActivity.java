@@ -80,15 +80,14 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
         });
 
         goalModels = dbHelper.getGoals(userID);
-        goalAdaptor = new goal_RecyclerViewAdaptor(ProfileActivity.this , goalModels);
+        goalAdaptor = new goal_RecyclerViewAdaptor(this , goalModels);
         goal_recycler.setAdapter(goalAdaptor);
-        goal_recycler.setLayoutManager(new LinearLayoutManager(ProfileActivity.this));
+        goal_recycler.setLayoutManager(new LinearLayoutManager(this));
 
         addGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addGoal(userID);
-
             }
         });
 
@@ -141,9 +140,25 @@ public class ProfileActivity extends HomeActivity implements NameDialog.NameDial
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         goalModels = dbHelper.getGoals(userID);
-        goalAdaptor = new goal_RecyclerViewAdaptor(ProfileActivity.this , goalModels);
+        goalAdaptor = new goal_RecyclerViewAdaptor(this , goalModels);
         goal_recycler.setAdapter(goalAdaptor);
         goal_recycler.setLayoutManager(new LinearLayoutManager(ProfileActivity.this));
+
+        new AlertDialog.Builder(this)
+                .setTitle("Congratulations!")
+                .setMessage("Goal Added Successfully!")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        goalAdaptor = new goal_RecyclerViewAdaptor(ProfileActivity.this , goalModels);
+                        goal_recycler.setAdapter(goalAdaptor);
+                        goal_recycler.setLayoutManager(new LinearLayoutManager(ProfileActivity.this));
+
+                        Intent intent = new Intent(ProfileActivity.this, ProfileActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .show();
     }
 
     private void confirmation(){
