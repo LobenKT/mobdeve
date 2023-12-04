@@ -23,5 +23,6 @@
     <string name="checkin">Mood Check In</string>
     <string name="featured">Featured Articles</string>
     <string name="welcome">Welcome, </string>
+    <string name="moodtracker"> Mood Tracker</string>
 
 </resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,91 +7,106 @@
     android:background="@drawable/gradient_background"
     tools:context=".meditate.MeditateActivity">
 
-    <Button
-        android:id="@+id/happiness_meditate"
-        android:layout_width="127dp"
-        android:layout_height="65dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="80dp"
-        android:text="Happiness"
-        app:layout_constraintBottom_toTopOf="@+id/meditate_courses"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavigationView">
 
-    <Button
-        android:id="@+id/sleep_meditate"
-        android:layout_width="127dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="20dp"
-        android:text="Sleep"
-        app:layout_constraintBottom_toTopOf="@+id/relax_meditate"
-        app:layout_constraintStart_toStartOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="16dp">
 
-    <Button
-        android:id="@+id/focus_meditate"
-        android:layout_width="127dp"
-        android:layout_height="65dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="20dp"
-        android:text="Focus"
-        app:layout_constraintBottom_toTopOf="@+id/happiness_meditate"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/meditation_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="What to meditate on today?"
+                android:textSize="20sp"
+                android:textColor="#738c89"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp" />
 
-    <Button
-        android:id="@+id/relax_meditate"
-        android:layout_width="127dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="80dp"
-        android:text="Relax"
-        app:layout_constraintBottom_toTopOf="@+id/meditate_courses"
-        app:layout_constraintStart_toStartOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="16dp">
 
-    <TextView
-        android:id="@+id/meditate_courses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="272dp"
-        android:text="Meditation Courses: "
-        android:textColor="#738c89"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                <Button
+                    android:id="@+id/happiness_meditate"
+                    android:layout_width="127dp"
+                    android:layout_height="65dp"
+                    android:text="Happiness"
+                    android:layout_marginEnd="8dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/meditate_recycler"
-        android:layout_width="362dp"
-        android:layout_height="384dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/meditate_courses" />
+                <Button
+                    android:id="@+id/focus_meditate"
+                    android:layout_width="127dp"
+                    android:layout_height="65dp"
+                    android:text="Focus"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/sleep_meditate"
+                    android:layout_width="127dp"
+                    android:layout_height="65dp"
+                    android:text="Sleep"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/relax_meditate"
+                    android:layout_width="127dp"
+                    android:layout_height="65dp"
+                    android:text="Relax"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/meditate_courses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meditation Courses: "
+                android:textColor="#738c89"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/meditate_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+
+            <Button
+                android:id="@+id/reset_filter"
+                android:layout_width="118dp"
+                android:layout_height="40dp"
+                android:text="Reset"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp" />
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_menu" />
-
-    <Button
-        android:id="@+id/reset_filter"
-        android:layout_width="118dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="24dp"
-        android:text="Reset"
-        app:layout_constraintBottom_toTopOf="@+id/meditate_recycler"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.243"
-        app:layout_constraintStart_toEndOf="@+id/meditate_courses" />
 
     <ProgressBar
         android:id="@+id/loader"
@@ -99,12 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.701" />
+        android:layout_centerInParent="true" />
 
     <TextView
         android:id="@+id/errorText"
@@ -112,11 +122,6 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:text="Something went wrong"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        android:layout_centerInParent="true" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
