@@ -47,12 +47,6 @@ public class GoalDialog extends AppCompatDialogFragment {
                         String goal = inputGoal.getText().toString();
                         dbhelper.addGoal(userID, goal);
 
-                        new AlertDialog.Builder(getContext())
-                                .setTitle("Congratulations!")
-                                .setMessage("Goal Added Successfully!")
-                                .setPositiveButton("OK", null)
-                                .show();
-
                         // Display the toast message
                         //Toast.makeText(getContext(), "Goal set successfully!", Toast.LENGTH_SHORT).show();
                     }
