@@ -1,9 +1,5 @@
 package com.mobdeve.s16.mindpal.meditate;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.mobdeve.s16.mindpal.NavigationActivity;
-import com.mobdeve.s16.mindpal.R;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.androdocs.httprequest.HttpRequest;
+import com.mobdeve.s16.mindpal.NavigationActivity;
+import com.mobdeve.s16.mindpal.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -143,7 +141,7 @@ public class MeditateActivity extends NavigationActivity {
                 findViewById(R.id.meditate_recycler).setVisibility(View.VISIBLE);
                 //Toast.makeText(MeditateActivity.this, "Video Title: " + videoTitle, Toast.LENGTH_LONG).show();
             }catch (JSONException e){
-                Toast.makeText(MeditateActivity.this, "Sira Pre", Toast.LENGTH_LONG).show();
+                Toast.makeText(MeditateActivity.this, "Loading Videos Again", Toast.LENGTH_LONG).show();
             }
         }
     }
