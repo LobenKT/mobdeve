@@ -1,5 +1,7 @@
 package com.mobdeve.s16.mindpal.home;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,7 +79,19 @@ public class HomeActivity extends NavigationActivity {
         checkIn_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AddMood();
+                new AlertDialog.Builder(HomeActivity.this)
+                        .setTitle("Congratulations!")
+                        .setMessage("Mood has been logged")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .show();
             }
         });
 

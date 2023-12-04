@@ -3,6 +3,7 @@ package com.mobdeve.s16.mindpal.home;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -54,11 +55,6 @@ public class MoodDialog  extends AppCompatDialogFragment {
                         DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
                         dbHelper.addMood(userID, Mood, formattedDate);
 
-                        new AlertDialog.Builder(getContext())
-                                .setTitle("Congratulations!")
-                                .setMessage("Mood has been logged")
-                                .setPositiveButton("OK", null)
-                                .show();
 
                         // Display the toast message
                         //Toast.makeText(getContext(), "Goal set successfully!", Toast.LENGTH_SHORT).show();
