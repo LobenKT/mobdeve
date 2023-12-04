@@ -1,15 +1,18 @@
 package com.mobdeve.s16.mindpal.profile;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s16.mindpal.R;
@@ -42,6 +45,12 @@ public class goal_RecyclerViewAdaptor extends RecyclerView.Adapter<goal_Recycler
         holder.GoalProgress.setText(goalModels.get(position).getCurrentProgress());
         DatabaseHelper dbhelper = new DatabaseHelper(context);
         int id = goalModels.get(position).getId();
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmDeletion(id);
+            }
+        });
         holder.statusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,12 +93,30 @@ public class goal_RecyclerViewAdaptor extends RecyclerView.Adapter<goal_Recycler
         TextView GoalTitle;
         TextView GoalProgress;
         Button statusBtn;
+
+        ImageView deleteBtn;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             GoalTitle = itemView.findViewById(R.id.Goal_Title);
             GoalProgress = itemView.findViewById(R.id.progress_text);
             statusBtn = itemView.findViewById(R.id.update_status);
+            deleteBtn = itemView.findViewById(R.id.delete_btn);
         }
+    }
+
+    private void confirmDeletion(int goalID) {
+        new AlertDialog.Builder(context)
+                .setTitle("Delete Goal")
+                .setMessage("Are you sure you want to delete this Goal?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatabaseHelper dbHelper = new DatabaseHelper(context);
+                        dbHelper.deleteGoal(goalID);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                // .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

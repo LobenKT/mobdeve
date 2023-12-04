@@ -293,6 +293,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteGoal (int goalID){
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_GOALS + " WHERE " + GOAL_ID + " = " + goalID;
+        db.execSQL(query);
+        db.close();
+    }
+
     // Inside DatabaseHelper.java
 
     public void deleteUserData(int userID) {
