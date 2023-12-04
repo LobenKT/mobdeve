@@ -35,12 +35,29 @@
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/inspiringQuote"
+                android:layout_width="364dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Welcome_Message"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="cursive"
+                android:text="@string/quote"
+                android:textColor="#738c89"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:scrollbars="vertical"
+                android:maxLines="4"
+                android:ellipsize="end"
+                android:tooltipText="Quote details" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="143dp"
-                android:layout_below="@id/Welcome_Message">
+                android:layout_below="@id/inspiringQuote"
+                android:layout_marginTop="20dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -55,21 +72,21 @@
                         android:textSize="25sp" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
+
             <Button
                 android:id="@+id/mood_history_Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cardView"
                 android:layout_marginTop="20dp"
-                android:text="@string/checkin"
-                />
+                android:text="Mood Check In" />
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="@string/featured"
+                android:text="Featured Content"
                 android:textColor="#738c89"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -81,24 +98,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_below="@id/textView8" />
-
-            <TextView
-                android:id="@+id/inspiringQuote"
-                android:layout_width="364dp"
-                android:layout_height= "wrap_content"
-                android:layout_below="@id/Welcome_Message"
-                android:layout_marginTop="28dp"
-                android:layout_marginBottom="64dp"
-                android:fontFamily="cursive"
-                android:text="@string/quote"
-                android:textColor="#738c89"
-                android:tooltipText="Quote details"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:scrollbars="vertical"
-                android:maxLines="4"
-                android:ellipsize="end"
-                />
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
