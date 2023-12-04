@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/gradient_background">
 
+            <!-- Profile Image centered horizontally -->
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profile_image"
                 android:layout_width="150dp"
@@ -28,102 +29,59 @@
                 android:layout_marginTop="16dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/circularImageView"
                 app:srcCompat="@drawable/ann_sample" />
 
+            <!-- Username Text centered horizontally and below profile image -->
             <TextView
                 android:id="@+id/username_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/username"
                 android:textColor="#738c89"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/profile_image"
-                app:layout_constraintTop_toTopOf="@+id/profile_image"
-                app:layout_constraintBottom_toBottomOf="@+id/profile_image" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
+            <!-- Settings Icon to the right of username -->
             <ImageView
                 android:id="@+id/iv_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
                 android:contentDescription="@string/settings"
                 android:src="@drawable/ic_settings"
-                app:layout_constraintStart_toEndOf="@+id/profile_image"
-                app:layout_constraintTop_toBottomOf="@+id/username_text" />
+                app:layout_constraintStart_toEndOf="@+id/username_text"
+                app:layout_constraintTop_toTopOf="@+id/username_text"
+                app:layout_constraintBottom_toBottomOf="@+id/username_text" />
 
+            <!-- Mood Tracker Text centered horizontally -->
             <TextView
                 android:id="@+id/MoodTracker_Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
+                android:layout_marginTop="20dp"
                 android:text="Mood Tracker"
                 android:textColor="#738c89"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.056"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_image" />
-
-            <Button
-                android:id="@+id/mood_history_Button"
-                android:layout_width="266dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="12dp"
-                android:text="View Mood History"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView" />
+                app:layout_constraintTop_toBottomOf="@+id/username_text" />
 
-            <TextView
-                android:id="@+id/goals_label"
-                android:layout_width="114dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:text="@string/goals"
-                android:textColor="#738c89"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.03"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mood_history_Button" />
-
-            <Button
-                android:id="@+id/add_Goal_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_goal"
-                android:background="@drawable/rounded_button"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/goals_label" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/goals_recycler_view"
-                android:layout_width="393dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_Goal_btn"
-                app:layout_constraintVertical_bias="0.0" />
-
-
-
+            <!-- CardView centered horizontally -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/MoodTracker_Text">
 
                 <RelativeLayout
@@ -138,13 +96,59 @@
                         android:text="Today's Mood: "
                         android:textSize="25sp" />
                 </RelativeLayout>
-
             </androidx.cardview.widget.CardView>
+
+            <!-- Mood History Button centered horizontally -->
+            <Button
+                android:id="@+id/mood_history_Button"
+                android:layout_width="266dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:text="View Mood History"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+            <!-- Goals Label centered horizontally -->
+            <TextView
+                android:id="@+id/goals_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:text="@string/goals"
+                android:textColor="#738c89"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mood_history_Button" />
+
+            <!-- Add Goal Button centered horizontally -->
+            <Button
+                android:id="@+id/add_Goal_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_goal"
+                android:background="@drawable/rounded_button"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/goals_label" />
+
+            <!-- Goals RecyclerView centered horizontally -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/goals_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_Goal_btn" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
