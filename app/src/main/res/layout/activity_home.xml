@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="72dp"
-                android:text="Welcome, "
+                android:text="@string/welcome"
                 android:textColor="#738c89"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -79,14 +79,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cardView"
                 android:layout_marginTop="20dp"
-                android:text="Mood Check In" />
+                android:text="@string/checkin" />
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="Featured Content"
+                android:text="@string/featured"
                 android:textColor="#738c89"
                 android:textSize="25sp"
                 android:textStyle="bold"

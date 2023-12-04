@@ -22,5 +22,6 @@
     <string name="moodtoday">Today\'s Mood</string>
     <string name="checkin">Mood Check In</string>
     <string name="featured">Featured Articles</string>
+    <string name="welcome">Welcome, </string>
 
 </resources>
